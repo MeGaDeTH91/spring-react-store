@@ -28,7 +28,7 @@ const Header = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/" variant="outline-info">
-          <LeftSpan>Spring^React-</LeftSpan><RightSpan>-store</RightSpan>
+          <LeftSpan>Spring^React-</LeftSpan><RightSpan>store</RightSpan>
         </Navbar.Brand>
         <Form inline>
           <FormControl

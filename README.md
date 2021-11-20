@@ -13,9 +13,9 @@ based on the React library.
 ### <i>Launch settings: </i><br>
 The REST API is located in the 'rest-api' folder, before building and starting the project, please provide environment variables,
 needed for MySQL database access:<br>
-SPRING_DATASOURCE_URL
-SPRING_DATASOURCE_USERNAME
-SPRING_DATASOURCE_PASSWORD
+SPRING_DATASOURCE_URL<br>
+SPRING_DATASOURCE_USERNAME<br>
+SPRING_DATASOURCE_PASSWORD<br>
 Then configure the Spring project:<br>
 You can do this using IntelliJ IDEA or similar software, just add run configuration and hit 'Run' button<br>or<br>
 build project with 'mvn clean install' and execute binary. This will start the REST API on
@@ -30,9 +30,9 @@ Cypress is used for more complex End-to-End testing with > 85% functionality cov
 
 ### <i>Hosting: </i><br>
 The application is hosted on [Heroku](https://www.heroku.com) and can be found on the following link:<br>
-[https://vast-eyrie-11496.herokuapp.com](https://vast-eyrie-11496.herokuapp.com) <br>
+[https:.....herokuapp.com](https://.....herokuapp.com) <br>
 The REST API is hosted also on [Heroku](https://www.heroku.com) and can be found on the following link:<br>
-[https://express-js-rest.herokuapp.com](https://express-js-rest.herokuapp.com)
+[https:.....herokuapp.com](https:.....herokuapp.com)
 
 
 ### <i>Table of contents: </i><br>

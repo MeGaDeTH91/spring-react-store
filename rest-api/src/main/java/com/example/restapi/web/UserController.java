@@ -35,7 +35,7 @@ public class UserController {
 
         }
 
-        this.userService.registerUser(this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
+        this.userService.registerUser(userRegisterBindingModel);
         return "redirect:login";
     }
 }
