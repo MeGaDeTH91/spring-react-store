@@ -33,7 +33,7 @@ const App = (props) => {
 
   const logOut = () => {
     document.cookie =
-      "x-auth-token=; expires = Thu, 01 Jan 1970 00:00:00 GMT;";
+      "x-auth-token=; expires = Thu, 01 Jan 1970 00:00:00 GMT;SameSite=None;Secure";
 
     setUser({
       loggedIn: false,
@@ -49,11 +49,11 @@ const App = (props) => {
       return;
     }
     
-    fetch("http://127.0.0.1:8000/api/users/verify/", {
+    fetch("http://127.0.0.1:8000/api/verify", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((promise) => {
@@ -63,10 +63,10 @@ const App = (props) => {
       })
       .then((response) => {
         logIn({
-          id: response.id,
-          username: response.username,
-          is_superuser: response.is_superuser,
-          is_active: response.is_active,
+          id: response["id"],
+          username: response["username"],
+          is_superuser: response["administrator"],
+          is_active: response["active"],
         });
 
         setLoading(false);

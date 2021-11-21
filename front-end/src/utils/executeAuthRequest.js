@@ -7,19 +7,19 @@ const executeAuthRequest = async (url, method, body, onSuccess, onFailure) => {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${getCookie("x-auth-token")}`,
+        Authorization: `Bearer ${getCookie("x-auth-token")}`,
       },
     });
 
     const response = await promise.json();
 
     if (!promise.ok) {
-      onFailure(`Error occured: ${response}`);
+      onFailure(`Error occurred: ${response}`);
     } else {
       onSuccess(response);
     }
   } catch (error) {
-    onFailure("Error occured: ", error);
+    onFailure("Error occurred: ", error);
   }
 };
 

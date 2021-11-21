@@ -1,16 +1,17 @@
 package com.example.restapi.service;
 
-import com.example.restapi.model.binding.UserRegisterBindingModel;
 import com.example.restapi.model.service.UserServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    UserServiceModel registerUser(UserRegisterBindingModel userRegisterBindingModel);
+    UserServiceModel registerUser(UserServiceModel userServiceModel);
 
-    /*UserServiceModel findByUsername(String username);
+    boolean userExists(String username);
 
-    UserServiceModel editUserProfile(UserServiceModel userServiceModel, UserProfileEditBindingModel userProfileEditBindingModel);
+    UserServiceModel getByUsername(String username);
+
+    /*UserServiceModel editUserProfile(UserServiceModel userServiceModel, UserProfileEditBindingModel userProfileEditBindingModel);
 
     List<UserServiceModel> findAllUsers();
 

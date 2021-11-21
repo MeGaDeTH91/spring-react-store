@@ -24,7 +24,7 @@ const LoginPage = () => {
     }
 
     await authenticate(
-      "http://127.0.0.1:8000/api/users/login/",
+      "http://127.0.0.1:8000/api/authenticate",
       {
         username,
         password,
@@ -53,14 +53,14 @@ const LoginPage = () => {
           value={username}
           label="Username"
           onChange={(e) => setUsername(e.target.value)}
-        ></Input>
+        />
         <Input
           type="password"
           id="password"
           value={password}
           label="Password"
           onChange={(e) => setPassword(e.target.value)}
-        ></Input>
+        />
         <FormControlDiv>
           <FormButton type="submit">{"Login"}</FormButton>
         </FormControlDiv>

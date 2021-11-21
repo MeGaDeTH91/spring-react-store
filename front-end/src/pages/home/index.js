@@ -15,7 +15,7 @@ class HomePage extends Component {
   }
 
   getProducts = async () => {
-    const promise = await fetch(`http://127.0.0.1:8000/api/products/all/`);
+    const promise = await fetch(`http://127.0.0.1:8000/api/products/all`);
 
     const products = await promise.json();
 

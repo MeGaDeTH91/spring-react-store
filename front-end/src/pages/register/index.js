@@ -56,7 +56,7 @@ const RegisterPage = () => {
     }
 
     await authenticate(
-      "http://127.0.0.1:8000/api/users/login/",
+      "http://127.0.0.1:8000/api/authenticate",
       {
         username,
         password,
@@ -85,45 +85,45 @@ const RegisterPage = () => {
           value={username}
           label="Username"
           onChange={(e) => setUsername(e.target.value)}
-        ></Input>
+        />
         <Input
           id="email"
           value={email}
           label="Email"
           onChange={(e) => setEmail(e.target.value)}
-        ></Input>
+        />
         <Input
           id="first_name"
           value={first_name}
           label="First name"
           onChange={(e) => setFirstName(e.target.value)}
-        ></Input>
+        />
         <Input
           id="last_name"
           value={last_name}
           label="Last name"
           onChange={(e) => setLastName(e.target.value)}
-        ></Input>
+        />
         <Input
           id="address"
           value={address}
           label="Address"
           onChange={(e) => setAddress(e.target.value)}
-        ></Input>
+        />
         <Input
           type="password"
           id="password"
           value={password}
           label="Password"
           onChange={(e) => setPassword(e.target.value)}
-        ></Input>
+        />
         <Input
           type="password"
           id="re-password"
           value={rePassword}
           label="Re-Password"
           onChange={(e) => setRePassword(e.target.value)}
-        ></Input>
+        />
         <FormControlDiv>
           <FormButton type="submit">{"Register"}</FormButton>
         </FormControlDiv>

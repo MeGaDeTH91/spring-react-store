@@ -44,13 +44,13 @@ const CreateProductPage = () => {
     const response = await fetch(`http://127.0.0.1:8000/api/categories/all`);
 
     if (!response.ok) {
-      notifications.showMessage("Error occured.", "danger");
+      notifications.showMessage("Error occurred.", "danger");
       history.push("/error");
     } else {
       const categories = await response.json();
 
       if (!categories) {
-        notifications.showMessage("Error occured.", "danger");
+        notifications.showMessage("Error occurred.", "danger");
         history.push("/error");
       }
 
