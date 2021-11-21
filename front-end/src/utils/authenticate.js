@@ -9,17 +9,17 @@ const authenticate = async (url, body, onSuccess, onFailure) => {
     });
 
     const response = await promise.json();
-    const authToken = response.token;
+    const authToken = response["token"];
 
     if (!promise.ok) {
-      onFailure(`Error occured: ${response}`);
-    } else if (response.user.username && response.user.is_active && authToken) {
-      document.cookie = `x-auth-token=${authToken};`;
+      onFailure(`Error occurred: ${response}`);
+    } else if (response["username"] && response["active"] && authToken) {
+      document.cookie = `x-auth-token=${authToken};SameSite=None;Secure`;
       onSuccess({
-        username: response.user.username,
-        is_superuser: response.user.is_superuser,
-        is_active: response.user.is_active,
-        id: response.user.id,
+        id: response["id"],
+        username: response["username"],
+        is_superuser: response["administrator"],
+        is_active: response["active"],
       });
     } else {
       onFailure("Account is suspended!");

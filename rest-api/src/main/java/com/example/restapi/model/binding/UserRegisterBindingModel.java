@@ -1,6 +1,9 @@
 package com.example.restapi.model.binding;
 
+import com.example.restapi.messages.UserMessages;
+
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
@@ -15,7 +18,8 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
-    @Size(min = 3, max = 10, message = "Username length must be between 3 and 10 characters.")
+    @Size(min = 3, max = 10, message = UserMessages.USERNAME_VALIDATION)
+    @NotNull(message = UserMessages.USERNAME_VALIDATION)
     public String getUsername() {
         return username;
     }
@@ -24,7 +28,8 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
-    @Size(min = 3, max = 20, message = "Enter valid first name.")
+    @Size(min = 3, max = 20, message = UserMessages.FIRST_NAME_VALIDATION)
+    @NotNull(message = UserMessages.FIRST_NAME_VALIDATION)
     public String getFirstName() {
         return firstName;
     }
@@ -33,7 +38,8 @@ public class UserRegisterBindingModel {
         this.firstName = firstName;
     }
 
-    @Size(min = 3, max = 20, message = "Enter valid last name.")
+    @Size(min = 3, max = 20, message = UserMessages.LAST_NAME_VALIDATION)
+    @NotNull(message = UserMessages.LAST_NAME_VALIDATION)
     public String getLastName() {
         return lastName;
     }
@@ -50,8 +56,9 @@ public class UserRegisterBindingModel {
         this.address = address;
     }
 
-    @Size(min = 1, message = "Enter valid email address.")
-    @Email(message = "Enter valid email address.")
+    @Size(min = 1, message = UserMessages.EMAIL_VALIDATION)
+    @Email(message = UserMessages.EMAIL_VALIDATION)
+    @NotNull(message = UserMessages.EMAIL_VALIDATION)
     public String getEmail() {
         return email;
     }
@@ -60,7 +67,8 @@ public class UserRegisterBindingModel {
         this.email = email;
     }
 
-    @Size(min = 3, message = "Password length must be more than 3 characters long.")
+    @Size(min = 3, message = UserMessages.PASSWORD_VALIDATION)
+    @NotNull(message = UserMessages.PASSWORD_VALIDATION)
     public String getPassword() {
         return password;
     }
@@ -69,7 +77,8 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
-    @Size(min = 3, message = "Password length must be more than 3 characters long.")
+    @Size(min = 3, message = UserMessages.PASSWORD_VALIDATION)
+    @NotNull(message = UserMessages.PASSWORD_VALIDATION)
     public String getConfirmPassword() {
         return confirmPassword;
     }

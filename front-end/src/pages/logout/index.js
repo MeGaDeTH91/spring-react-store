@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import UserContext from "../../UserContext";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import NotificationContext from "../../NotificationContext";
 
 const LogoutPage = () => {

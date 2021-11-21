@@ -8,19 +8,19 @@ public class UserServiceModel extends BaseServiceModel {
     private String email;
 
     private String firstName;
-    private String secondName;
+    private String lastName;
 
     private Set<RoleServiceModel> authorities;
 
     public UserServiceModel() {
     }
 
-    public UserServiceModel(String username, String password, String email, String firstName, String secondName, Set<RoleServiceModel> authorities){
+    public UserServiceModel(String username, String password, String email, String firstName, String lastName, Set<RoleServiceModel> authorities){
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.authorities = authorities;
     }
 
@@ -56,12 +56,12 @@ public class UserServiceModel extends BaseServiceModel {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Set<RoleServiceModel> getAuthorities() {
