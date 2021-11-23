@@ -20,7 +20,7 @@ Then configure the Spring project:<br>
 You can do this using IntelliJ IDEA or similar software, just add run configuration and hit 'Run' button<br>or<br>
 build project with 'mvn clean install' and execute binary. This will start the REST API on
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-Next, in the 'react_front_end' folder, in separate command-line window run 'npm install' and 'npm start' command and
+Next, in the 'front-end' folder, in separate command-line window run 'npm install' and 'npm start' command and
 this will start the React app on  [http://localhost:3000/](http://localhost:3000/)
 After that, it is up to you :)
 

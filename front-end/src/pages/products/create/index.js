@@ -94,7 +94,7 @@ const CreateProductPage = () => {
     }
 
     await executeAuthRequest(
-      "http://127.0.0.1:8000/api/products/create/",
+      "http://127.0.0.1:8000/api/products/create",
       "POST",
       {
         title,
@@ -133,13 +133,13 @@ const CreateProductPage = () => {
           value={title}
           label="Title"
           onChange={(e) => setTitle(e.target.value)}
-        ></Input>
+        />
         <TextAreaActive
           id="description"
           value={description}
           label="Description"
           onChange={(e) => setDescription(e.target.value)}
-        ></TextAreaActive>
+        />
         <UploadButton
           title="Upload Image"
           id="imageURL"
@@ -154,14 +154,14 @@ const CreateProductPage = () => {
           value={price}
           label="Price"
           onChange={(e) => setPrice(e.target.value)}
-        ></Input>
+        />
         <Input
           type="number"
           id="quantity"
           value={quantity}
           label="Quantity"
           onChange={(e) => setQuantity(e.target.value)}
-        ></Input>
+        />
         <CategoryDropdown
           title={categoryTitle}
           categoriesList={categories}

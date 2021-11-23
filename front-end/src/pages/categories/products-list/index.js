@@ -34,7 +34,7 @@ class CategoryProductsPage extends Component {
     return (
       <PageLayout>
         <div>
-          <Title title={`Products in category "${this.state.category.title}"`}></Title>
+          <Title title={`Products in category "${this.state.category.title}"`} />
           <hr />
           {this.state.products && this.state.products.length ? (
             <CardDeckComponent>
@@ -48,7 +48,7 @@ class CategoryProductsPage extends Component {
                     price={formatPrice(x.price)}
                     quantity={x.quantity}
                     category={this.state.category}
-                  ></CardProduct>
+                  />
                 );
               })}
             </CardDeckComponent>

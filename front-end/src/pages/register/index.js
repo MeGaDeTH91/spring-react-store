@@ -11,11 +11,11 @@ import NotificationContext from "../../NotificationContext";
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const context = useContext(UserContext);
   const notifications = useContext(NotificationContext);
@@ -24,26 +24,26 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!username || !first_name || !last_name || !password || !rePassword || password.length < 3 || rePassword.length < 3) {
+    if (!username || !firstName || !lastName || !password || !confirmPassword || password.length < 3 || confirmPassword.length < 3) {
       notifications.showMessage('Username, full name, password and confirmation password should be more than 2 characters.', 'danger');
       return;
     }
 
-    if (password !== rePassword) {
+    if (password !== confirmPassword) {
       notifications.showMessage('Passwords do not match.', 'danger');
       return;
     }
 
-    const promise = await fetch("http://127.0.0.1:8000/api/users/register/", {
+    const promise = await fetch("http://127.0.0.1:8000/api/users/register", {
       method: "POST",
       body: JSON.stringify({
         username,
         email,
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         address,
         password,
-        rePassword
+        confirmPassword
       }),
       headers: {
         "Content-Type": "application/json",
@@ -94,13 +94,13 @@ const RegisterPage = () => {
         />
         <Input
           id="first_name"
-          value={first_name}
+          value={firstName}
           label="First name"
           onChange={(e) => setFirstName(e.target.value)}
         />
         <Input
           id="last_name"
-          value={last_name}
+          value={lastName}
           label="Last name"
           onChange={(e) => setLastName(e.target.value)}
         />
@@ -120,9 +120,9 @@ const RegisterPage = () => {
         <Input
           type="password"
           id="re-password"
-          value={rePassword}
+          value={confirmPassword}
           label="Re-Password"
-          onChange={(e) => setRePassword(e.target.value)}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <FormControlDiv>
           <FormButton type="submit">{"Register"}</FormButton>

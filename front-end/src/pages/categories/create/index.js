@@ -46,7 +46,7 @@ const CreateCategoryPage = () => {
       return;
     }
 
-    await executeAuthRequest("http://127.0.0.1:8000/api/categories/create/", 
+    await executeAuthRequest("http://127.0.0.1:8000/api/categories/create",
       "POST",
       {
         title,
@@ -80,7 +80,7 @@ const CreateCategoryPage = () => {
           value={title}
           label="Title"
           onChange={(e) => setTitle(e.target.value)}
-        ></Input>
+        />
         <UploadButton
           title="Upload Image"
           id="imageURL"

@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductServiceModel> getAllProducts();
+
+    boolean productExists(String title);
+
+    ProductServiceModel create(ProductServiceModel productServiceModel);
 }

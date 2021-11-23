@@ -1,0 +1,11 @@
+package com.example.restapi.messages;
+
+public class CategoryMessages {
+    public static final String ERROR_GETTING_ALL_CATEGORIES = "Error occurred while getting all categories!";
+    public static final String CREATION_NOT_SUCCESSFUL = "Category creation was not successful.";
+    public static final String CATEGORY_ALREADY_EXISTS = "Category already exists.";
+
+    // Binding
+    public static final String TITLE_VALIDATION = "Title should be between 5 and 30 characters long.";
+    public static final String IMAGE_URL_VALIDATION = "Enter valid URL.";
+}

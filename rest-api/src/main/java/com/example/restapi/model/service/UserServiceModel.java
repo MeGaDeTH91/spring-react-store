@@ -1,15 +1,19 @@
 package com.example.restapi.model.service;
 
+import com.example.restapi.model.entity.ShoppingCart;
+
 import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel {
     private String username;
     private String password;
     private String email;
+    private String address;
 
     private String firstName;
     private String lastName;
 
+    private ShoppingCart cart;
     private Set<RoleServiceModel> authorities;
 
     public UserServiceModel() {
@@ -66,6 +70,22 @@ public class UserServiceModel extends BaseServiceModel {
 
     public Set<RoleServiceModel> getAuthorities() {
         return authorities;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public ShoppingCart getCart() {
+        return cart;
+    }
+
+    public void setCart(ShoppingCart cart) {
+        this.cart = cart;
     }
 
     public void setAuthorities(Set<RoleServiceModel> authorities) {

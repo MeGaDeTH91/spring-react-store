@@ -1,11 +1,10 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.ProductMessages;
-import com.example.restapi.model.binding.ProductBindingModel;
+import com.example.restapi.messages.CategoryMessages;
+import com.example.restapi.model.binding.CategoryBindingModel;
 import com.example.restapi.model.service.CategoryServiceModel;
-import com.example.restapi.model.service.ProductServiceModel;
-import com.example.restapi.model.view.ProductListViewModel;
-import com.example.restapi.service.ProductService;
+import com.example.restapi.model.view.CategoryViewModel;
+import com.example.restapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -24,38 +23,38 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
-    private final ProductService productService;
+@RequestMapping("/categories")
+public class CategoryController {
+    private final CategoryService categoryService;
     private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, ModelMapper modelMapper) {
-        this.productService = productService;
+    public CategoryController(CategoryService categoryService, ModelMapper modelMapper) {
+        this.categoryService = categoryService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> all(){
-        List<ProductServiceModel> productsServiceList = productService.getAllProducts();
+        List<CategoryServiceModel> categoriesServiceList = categoryService.getAllCategories();
 
-        if(productsServiceList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ProductMessages.ERROR_GETTING_ALL_PRODUCTS);
+        if(categoriesServiceList == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CategoryMessages.ERROR_GETTING_ALL_CATEGORIES);
         }
 
-        List<ProductListViewModel> products = productsServiceList
+        List<CategoryViewModel> categories = categoriesServiceList
                 .stream()
-                .map(prod -> modelMapper.map(prod, ProductListViewModel.class))
+                .map(prod -> modelMapper.map(prod, CategoryViewModel.class))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(categories);
     }
 
     @PostMapping(value = "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> create(@Valid @RequestBody ProductBindingModel productBindingModel,
-                                         BindingResult bindingResult) {
+    public ResponseEntity<Object> create(@Valid @RequestBody CategoryBindingModel categoryBindingModel,
+                                           BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ResponseEntity
@@ -63,22 +62,20 @@ public class ProductController {
                     .body(bindingResult.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
-        if (productService.productExists(productBindingModel.getTitle())) {
+        if (categoryService.categoryExists(categoryBindingModel.getTitle())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(ProductMessages.PRODUCT_ALREADY_EXISTS);
+                    .body(CategoryMessages.CATEGORY_ALREADY_EXISTS);
         }
-        ProductServiceModel productServiceModel = modelMapper.map(productBindingModel, ProductServiceModel.class);
-        productServiceModel.setCategory(new CategoryServiceModel(productBindingModel.getCategory()));
 
-        ProductServiceModel product = this.productService.create(productServiceModel);
+        CategoryServiceModel category = this.categoryService.create(modelMapper.map(categoryBindingModel, CategoryServiceModel.class));
 
-        if (product == null) {
+        if (category == null) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(ProductMessages.CREATION_NOT_SUCCESSFUL);
+                    .body(CategoryMessages.CREATION_NOT_SUCCESSFUL);
         }
 
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(category);
     }
 }
