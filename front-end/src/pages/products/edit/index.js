@@ -42,7 +42,7 @@ const EditProductPage = () => {
 
   const getProduct = useCallback(async () => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/products/${params.id}/`
+      `http://127.0.0.1:8000/api/products/${params.id}`
     );
 
     if (!response.ok) {
@@ -98,7 +98,7 @@ const EditProductPage = () => {
     }
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/products/edit/${params.id}/`,
+      `http://127.0.0.1:8000/api/products/${params.id}`,
       "PUT",
       {
         title,

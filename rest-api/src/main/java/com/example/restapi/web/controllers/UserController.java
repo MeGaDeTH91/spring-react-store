@@ -4,6 +4,7 @@ import com.example.restapi.messages.UserMessages;
 import com.example.restapi.model.binding.UserRegisterBindingModel;
 import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.service.UserService;
+import com.example.restapi.util.JSONResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -36,20 +37,23 @@ public class UserController {
         if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {;
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(bindingResult.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage));
+                    .body(JSONResponse.jsonFromStream(bindingResult
+                            .getFieldErrors()
+                            .stream()
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage)));
         }
         UserServiceModel userServiceModel = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
         if (userService.userExists(userServiceModel.getUsername())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(UserMessages.USERNAME_ALREADY_EXISTS);
+                    .body(JSONResponse.jsonFromString(UserMessages.USERNAME_ALREADY_EXISTS));
         }
         UserServiceModel user = this.userService.register(userServiceModel);
 
         if (user == null) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(UserMessages.REGISTRATION_NOT_SUCCESSFUL);
+                    .body(JSONResponse.jsonFromString(UserMessages.REGISTRATION_NOT_SUCCESSFUL));
         }
 
         return ResponseEntity.ok(user);

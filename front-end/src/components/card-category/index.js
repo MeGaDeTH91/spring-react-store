@@ -23,7 +23,7 @@ const CardCategory = ({ categoryId, imageURL, title }) => {
   return (
     <Card>
       <div className={styles.thumbnail} onClick={onDetails}>
-      <CardImage src={imageURL} alt="Card image cap"></CardImage>
+      <CardImage src={imageURL} alt="Card image cap" />
       <CardBody>
         <h4>{ title.length > 21 ? (title) : (<div> {title}<br /><br /></div>)}</h4>
         <hr />
@@ -33,7 +33,7 @@ const CardCategory = ({ categoryId, imageURL, title }) => {
 
       {userIsAdministrator ? (
         <CardFooter>
-          <EditButton title="Edit Category" onClick={editCategory}></EditButton>
+          <EditButton title="Edit Category" onClick={editCategory} />
         </CardFooter>
       ) : null}
     </Card>

@@ -24,7 +24,7 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
     private static final String[] alwaysAllowedPaths =
-            new String[]{"/products/all", "/categories/all"};
+            new String[]{"/products/all", "/products/*", "/categories/all", "/categories/*"};
     private static final String[] guestPaths =
             new String[]{"/users/register", "/authenticate"};
 

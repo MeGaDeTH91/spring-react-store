@@ -8,6 +8,7 @@ import com.example.restapi.model.response.impl.UserVerifyResponseModel;
 import com.example.restapi.model.security.JwtRequest;
 import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.service.UserService;
+import com.example.restapi.util.JSONResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -71,12 +72,12 @@ public class AuthenticationController {
     public ResponseEntity<?> verifyAuthenticationToken(@RequestHeader(AUTHORIZATION_HEADER) String bearerToken,
                                                        Authentication authentication) {
         if (bearerToken == null || !bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(UserMessages.INVALID_JWT);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResponse.jsonFromString(UserMessages.INVALID_JWT));
         }
 
         Object principalObj = authentication.getPrincipal();
         if (principalObj == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(UserMessages.EMPTY_PRINCIPAL);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResponse.jsonFromString(UserMessages.EMPTY_PRINCIPAL));
         }
 
         final UserDetails userDetails = (UserDetails) principalObj;
@@ -95,9 +96,9 @@ public class AuthenticationController {
 
             return null;
         } catch (DisabledException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(UserMessages.ACCOUNT_INACTIVE);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(JSONResponse.jsonFromString(UserMessages.ACCOUNT_INACTIVE));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(UserMessages.INVALID_CREDENTIALS);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(JSONResponse.jsonFromString(UserMessages.INVALID_CREDENTIALS));
         }
     }
 

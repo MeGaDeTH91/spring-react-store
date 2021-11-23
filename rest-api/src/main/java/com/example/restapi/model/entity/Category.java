@@ -35,7 +35,7 @@ public class Category extends BaseEntity {
         this.imageURL = imageURL;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     public Set<Product> getProducts() {
         return products;
     }
