@@ -2,6 +2,7 @@ package com.example.restapi.service.impl;
 
 import com.example.restapi.model.entity.Category;
 import com.example.restapi.model.service.CategoryServiceModel;
+import com.example.restapi.model.service.CategoryUpdateServiceModel;
 import com.example.restapi.repository.CategoryRepository;
 import com.example.restapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryServiceModel> getAllCategories() {
+    public List<CategoryServiceModel> getAll() {
         return categoryRepository
                 .findAll()
                 .stream()
@@ -30,14 +31,36 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean categoryExists(String title) {
+    public boolean exists(String title) {
         return categoryRepository.existsByTitle(title);
     }
 
     @Override
     public CategoryServiceModel create(CategoryServiceModel categoryServiceModel) {
-        Category category = this.modelMapper.map(categoryServiceModel, Category.class);
+        Category category = modelMapper.map(categoryServiceModel, Category.class);
 
-        return this.modelMapper.map(this.categoryRepository.saveAndFlush(category), CategoryServiceModel.class);
+        return this.modelMapper.map(categoryRepository.saveAndFlush(category), CategoryServiceModel.class);
+    }
+
+    @Override
+    public CategoryServiceModel get(Long id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        if (category == null) {
+            return null;
+        }
+
+        return modelMapper.map(category, CategoryServiceModel.class);
+    }
+
+    @Override
+    public CategoryServiceModel update(CategoryUpdateServiceModel categoryUpdateServiceModel) {
+        Category category = categoryRepository.findById(categoryUpdateServiceModel.getId()).orElse(null);
+        if (category == null) {
+            return null;
+        }
+        modelMapper.map(categoryUpdateServiceModel, category);
+        categoryRepository.save(category);
+
+        return modelMapper.map(category, CategoryServiceModel.class);
     }
 }

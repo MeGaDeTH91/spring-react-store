@@ -1,31 +1,28 @@
-package com.example.restapi.model.entity;
+package com.example.restapi.model.view;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-@Entity
-@Table(name = "products")
-public class Product extends BaseEntity {
+public class CategoryProductsViewModel {
+    private Long id;
     private String title;
     private String description;
     private String imageURL;
     private BigDecimal price;
     private Integer quantity;
     private LocalDateTime created;
-    private Category category;
-    private Set<Review> reviews;
 
-    public Product() {
+    public CategoryProductsViewModel() {
     }
 
-    @Column(nullable = false, unique = true)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -34,7 +31,6 @@ public class Product extends BaseEntity {
         this.title = title;
     }
 
-    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -43,7 +39,6 @@ public class Product extends BaseEntity {
         this.description = description;
     }
 
-    @Column(nullable = false)
     public BigDecimal getPrice() {
         return price;
     }
@@ -52,7 +47,6 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    @Column(nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -61,7 +55,6 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Column(columnDefinition = "DATETIME DEFAULT NOW()", insertable = false, updatable = false)
     public LocalDateTime getCreated() {
         return created;
     }
@@ -70,30 +63,11 @@ public class Product extends BaseEntity {
         this.created = created;
     }
 
-    @Column(nullable = false)
     public String getImageURL() {
         return imageURL;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
-    }
-
-    @ManyToOne
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public Set<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
     }
 }

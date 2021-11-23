@@ -9,6 +9,7 @@ import CardParagraph from "../card-basics/paragraph";
 
 const CardProduct = (props) => {
   const { productId, imageURL, title, price, category, quantity } = props;
+
   const history = useHistory();
   const context = useContext(UserContext);
 
@@ -30,7 +31,7 @@ const CardProduct = (props) => {
   return (
     <Card>
       <div className={styles.thumbnail} onClick={onDetails}>
-        <CardImage src={imageURL} alt="Card image cap"></CardImage>
+        <CardImage src={imageURL} alt="Card image cap" />
         <CardBody title={title} price={price} quantity={quantity} />
       </div>
       <br />

@@ -40,7 +40,7 @@ const EditCategoryPage = () => {
 
   const getCategory = useCallback(async () => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/categories/${params.id}/`
+      `http://127.0.0.1:8000/api/categories/${params.id}`
     );
 
     if (!response.ok) {
@@ -82,7 +82,7 @@ const EditCategoryPage = () => {
     }
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/categories/${params.id}/`,
+      `http://127.0.0.1:8000/api/categories/${params.id}`,
       "PUT",
       {
         title,
@@ -120,7 +120,7 @@ const EditCategoryPage = () => {
           value={title}
           label="Title"
           onChange={(e) => setTitle(e.target.value)}
-        ></Input>
+        />
         <UploadButton
           title="Upload Image"
           id="imageURL"

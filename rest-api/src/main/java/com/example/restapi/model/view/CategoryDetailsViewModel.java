@@ -1,13 +1,14 @@
 package com.example.restapi.model.view;
 
-import com.example.restapi.model.service.BaseServiceModel;
+import java.util.Set;
 
-public class CategoryViewModel extends BaseServiceModel {
+public class CategoryDetailsViewModel {
     private Long id;
     private String title;
     private String imageURL;
+    private Set<CategoryProductsViewModel> products;
 
-    public CategoryViewModel() {
+    public CategoryDetailsViewModel() {
     }
 
     public Long getId() {
@@ -32,5 +33,13 @@ public class CategoryViewModel extends BaseServiceModel {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public Set<CategoryProductsViewModel> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<CategoryProductsViewModel> products) {
+        this.products = products;
     }
 }

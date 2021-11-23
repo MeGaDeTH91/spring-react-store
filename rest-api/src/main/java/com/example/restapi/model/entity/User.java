@@ -150,7 +150,7 @@ public class User extends BaseEntity implements UserDetails {
         this.cart = cart;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "reviewer")
     public Set<Review> getReviews() {
         return reviews;
     }

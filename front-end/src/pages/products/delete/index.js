@@ -23,7 +23,7 @@ const DeleteProductPage = () => {
 
   const getProduct = useCallback(async () => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/products/${params.id}/`
+      `http://127.0.0.1:8000/api/products/${params.id}`
     );
 
     if (!response.ok) {
@@ -56,7 +56,7 @@ const DeleteProductPage = () => {
     e.preventDefault();
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/products/delete/${params.id}/`,
+      `http://127.0.0.1:8000/api/products/${params.id}`,
       "DELETE",
       {},
       (product) => {
