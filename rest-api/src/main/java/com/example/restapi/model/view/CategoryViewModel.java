@@ -2,12 +2,12 @@ package com.example.restapi.model.view;
 
 import com.example.restapi.model.service.BaseServiceModel;
 
-public class CategoryListViewModel extends BaseServiceModel {
+public class CategoryViewModel extends BaseServiceModel {
     private Long id;
     private String title;
     private String imageURL;
 
-    public CategoryListViewModel() {
+    public CategoryViewModel() {
     }
 
     public Long getId() {

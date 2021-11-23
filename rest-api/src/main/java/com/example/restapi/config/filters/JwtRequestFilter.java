@@ -1,5 +1,6 @@
-package com.example.restapi.config;
+package com.example.restapi.config.filters;
 
+import com.example.restapi.config.JwtTokenUtil;
 import com.example.restapi.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

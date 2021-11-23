@@ -10,6 +10,10 @@ public class CategoryServiceModel extends BaseServiceModel {
     public CategoryServiceModel() {
     }
 
+    public CategoryServiceModel(Long id) {
+        this.setId(id);
+    }
+
     public String getTitle() {
         return title;
     }

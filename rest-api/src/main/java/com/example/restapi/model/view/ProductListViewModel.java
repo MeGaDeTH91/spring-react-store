@@ -11,7 +11,7 @@ public class ProductListViewModel {
     private BigDecimal price;
     private Integer quantity;
     private LocalDateTime created;
-    private CategoryListViewModel category;
+    private CategoryViewModel category;
 
     public ProductListViewModel() {
     }
@@ -72,11 +72,11 @@ public class ProductListViewModel {
         this.imageURL = imageURL;
     }
 
-    public CategoryListViewModel getCategory() {
+    public CategoryViewModel getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryListViewModel category) {
+    public void setCategory(CategoryViewModel category) {
         this.category = category;
     }
 }

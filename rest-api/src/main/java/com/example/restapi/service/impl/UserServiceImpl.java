@@ -4,6 +4,7 @@ import com.example.restapi.model.entity.User;
 import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.repository.UserRepository;
 import com.example.restapi.service.RoleService;
+import com.example.restapi.service.ShoppingCartService;
 import com.example.restapi.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +18,14 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final RoleService roleService;
+    private final ShoppingCartService shoppingCartService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
-    public UserServiceImpl(RoleService roleService, UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
+    public UserServiceImpl(RoleService roleService, ShoppingCartService shoppingCartService, UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.roleService = roleService;
+        this.shoppingCartService = shoppingCartService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel registerUser(UserServiceModel userServiceModel) {
+    public UserServiceModel register(UserServiceModel userServiceModel) {
         if (this.userRepository.count() == 0) {
             userServiceModel.setAuthorities(this.roleService.findAll());
         } else {
@@ -47,13 +50,14 @@ public class UserServiceImpl implements UserService {
 
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setPassword(this.passwordEncoder.encode(userServiceModel.getPassword()));
+        user.setCart(shoppingCartService.create());
 
         return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
     }
 
     @Override
     public boolean userExists(String username) {
-        return userRepository.findByUsername(username).isPresent();
+        return userRepository.existsByUsername(username);
     }
 
     @Override

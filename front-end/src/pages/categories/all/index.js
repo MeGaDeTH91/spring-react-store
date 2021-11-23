@@ -14,7 +14,7 @@ class CategoriesPage extends Component {
   }
 
   getCategories = async () => {
-    const promise = await fetch(`http://127.0.0.1:8000/api/categories/all/`);
+    const promise = await fetch(`http://127.0.0.1:8000/api/categories/all`);
 
     const categories = await promise.json();
 
@@ -31,7 +31,7 @@ class CategoriesPage extends Component {
     return (
       <PageLayout>
         <div>
-          <Title title="Categories"></Title>
+          <Title title="Categories" />
           <hr />
           <CardDeckComponent>
             {this.state.categories.map((x) => {
@@ -41,7 +41,7 @@ class CategoriesPage extends Component {
                   categoryId={x.id}
                   imageURL={x.imageURL}
                   title={x.title}
-                ></CardCategory>
+                />
               );
             })}
           </CardDeckComponent>

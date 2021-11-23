@@ -61,7 +61,7 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Column(insertable = false)
+    @Column(columnDefinition = "DATETIME DEFAULT NOW()", insertable = false, updatable = false)
     public LocalDateTime getCreated() {
         return created;
     }

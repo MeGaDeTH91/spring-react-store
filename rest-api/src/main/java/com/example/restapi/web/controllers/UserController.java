@@ -44,7 +44,7 @@ public class UserController {
                     .status(HttpStatus.CONFLICT)
                     .body(UserMessages.USERNAME_ALREADY_EXISTS);
         }
-        UserServiceModel user = this.userService.registerUser(userServiceModel);
+        UserServiceModel user = this.userService.register(userServiceModel);
 
         if (user == null) {
             return ResponseEntity
@@ -54,6 +54,4 @@ public class UserController {
 
         return ResponseEntity.ok(user);
     }
-
-
 }
