@@ -6,6 +6,7 @@ public class ProductMessages {
     public static final String UPDATE_NOT_SUCCESSFUL = "Product update was not successful.";
     public static final String PRODUCT_ALREADY_EXISTS = "Product already exists.";
     public static final String PRODUCT_DOES_NOT_EXISTS = "Product does not exists.";
+    public static final String PRODUCT_DELETED_SUCCESSFULLY = "Successfully removed product!";
 
     // Binding
     public static final String TITLE_VALIDATION = "Title should be between 5 and 30 characters long.";

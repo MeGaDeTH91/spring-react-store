@@ -19,6 +19,11 @@ public class UserServiceModel extends BaseServiceModel {
     public UserServiceModel() {
     }
 
+    @Override
+    public String toString() {
+        return getUsername();
+    }
+
     public UserServiceModel(String username, String password, String email, String firstName, String lastName, Set<RoleServiceModel> authorities){
         this.username = username;
         this.password = password;

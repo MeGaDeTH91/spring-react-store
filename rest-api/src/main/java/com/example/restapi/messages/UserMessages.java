@@ -18,4 +18,6 @@ public class UserMessages {
     public static final String EMAIL_VALIDATION = "Enter valid email address.";
     public static final String PASSWORD_VALIDATION = "Password length must be more than 3 characters long.";
 
+    // GET
+    public static final String USER_DOES_NOT_EXIST = "User does not exist.";
 }

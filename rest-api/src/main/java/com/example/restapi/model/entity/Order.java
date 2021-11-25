@@ -36,7 +36,7 @@ public class Order extends BaseEntity {
         this.customer = customer;
     }
 
-    @Column(insertable = false)
+    @Column(columnDefinition = "DATETIME DEFAULT NOW()", insertable = false, updatable = false)
     public LocalDateTime getCreated() {
         return created;
     }

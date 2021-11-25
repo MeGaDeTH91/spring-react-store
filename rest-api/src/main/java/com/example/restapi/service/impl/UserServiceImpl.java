@@ -56,8 +56,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userExists(String username) {
+    public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public UserServiceModel getById(Long id) {
+        return userRepository
+                .findById(id)
+                .map(user -> modelMapper.map(user, UserServiceModel.class))
+                .orElse(null);
     }
 
     @Override
@@ -72,7 +85,6 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.
-                        getAuthorities());
+                user.getAuthorities());
     }
 }

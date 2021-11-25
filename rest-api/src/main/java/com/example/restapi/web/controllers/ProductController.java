@@ -1,12 +1,11 @@
 package com.example.restapi.web.controllers;
 
 import com.example.restapi.messages.ProductMessages;
-import com.example.restapi.messages.ResponseMessages;
 import com.example.restapi.model.binding.ProductBindingModel;
 import com.example.restapi.model.service.CategoryServiceModel;
-import com.example.restapi.model.service.ProductUpdateServiceModel;
 import com.example.restapi.model.service.ProductServiceModel;
-import com.example.restapi.model.view.ProductListViewModel;
+import com.example.restapi.model.service.ProductUpdateServiceModel;
+import com.example.restapi.model.view.ProductDetailsViewModel;
 import com.example.restapi.service.ProductService;
 import com.example.restapi.util.JSONResponse;
 import org.modelmapper.ModelMapper;
@@ -50,9 +49,9 @@ public class ProductController {
                     .body(JSONResponse.jsonFromString(ProductMessages.ERROR_GETTING_ALL_PRODUCTS));
         }
 
-        List<ProductListViewModel> products = productsServiceList
+        List<ProductDetailsViewModel> products = productsServiceList
                 .stream()
-                .map(prod -> modelMapper.map(prod, ProductListViewModel.class))
+                .map(prod -> modelMapper.map(prod, ProductDetailsViewModel.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(products);
@@ -103,7 +102,7 @@ public class ProductController {
                     .status(HttpStatus.NOT_FOUND)
                     .body(JSONResponse.jsonFromString(ProductMessages.PRODUCT_DOES_NOT_EXISTS));
         }
-        return ResponseEntity.ok(modelMapper.map(productServiceModel, ProductListViewModel.class));
+        return ResponseEntity.ok(modelMapper.map(productServiceModel, ProductDetailsViewModel.class));
     }
 
     @PutMapping(value = "/{id}",
@@ -137,7 +136,7 @@ public class ProductController {
                     .status(HttpStatus.CONFLICT)
                     .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
         }
-        ProductListViewModel productViewModel = modelMapper.map(product, ProductListViewModel.class);
+        ProductDetailsViewModel productViewModel = modelMapper.map(product, ProductDetailsViewModel.class);
 
         return ResponseEntity.ok(productViewModel);
     }
@@ -154,6 +153,6 @@ public class ProductController {
 
         productService.delete(id);
 
-        return ResponseEntity.ok(ResponseMessages.PRODUCT_DELETED_SUCCESSFULLY);
+        return ResponseEntity.ok(JSONResponse.jsonFromString(ProductMessages.PRODUCT_DELETED_SUCCESSFULLY));
     }
 }

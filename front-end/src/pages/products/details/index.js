@@ -26,7 +26,7 @@ class ProductDetailsPage extends Component {
 
   getProduct = async (productId) => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/products/${productId}/`
+      `http://127.0.0.1:8000/api/products/${productId}`
     );
 
     if (!response.ok) {
@@ -57,7 +57,7 @@ class ProductDetailsPage extends Component {
     const userId = this.context.user.id;
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/orders/add-to-cart/${productId}/`,
+      `http://127.0.0.1:8000/api/orders/add-to-cart/${productId}`,
       "POST",
       {
         userId
@@ -101,7 +101,7 @@ class ProductDetailsPage extends Component {
               value={this.state.review}
               label="Create review"
               onChange={(e) => this.handleChange(e, "review")}
-            ></TextAreaActive>
+            />
             <AddButton title="Post review" />
           </CreateProductForm>
         ) : null}
@@ -119,10 +119,11 @@ class ProductDetailsPage extends Component {
     e.preventDefault();
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/products/create-review/${this.state.product.id}/`,
+      `http://127.0.0.1:8000/api/reviews/create`,
       "POST",
       {
         content: this.state.review,
+        product: this.state.product.id,
         reviewer: this.context.user.id,
       },
       (review) => {
@@ -193,7 +194,7 @@ class ProductDetailsPage extends Component {
                 <DeleteButton
                   title="Delete product"
                   onClick={this.deleteProduct}
-                ></DeleteButton>
+                />
               ) : null}
             </div>
           </div>
