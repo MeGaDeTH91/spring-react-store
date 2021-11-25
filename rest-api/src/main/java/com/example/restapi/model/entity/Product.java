@@ -96,4 +96,9 @@ public class Product extends BaseEntity {
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

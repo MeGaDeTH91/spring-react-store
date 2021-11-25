@@ -158,4 +158,9 @@ public class User extends BaseEntity implements UserDetails {
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
     }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 }

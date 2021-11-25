@@ -86,7 +86,7 @@ public class CategoryController {
         if (categoryService.exists(categoryBindingModel.getTitle())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(JSONResponse.jsonFromString(CategoryMessages.CATEGORY_ALREADY_EXISTS).toJSONString());
+                    .body(JSONResponse.jsonFromString(CategoryMessages.CATEGORY_ALREADY_EXISTS));
         }
 
         CategoryServiceModel category = this.categoryService.create(modelMapper.map(categoryBindingModel, CategoryServiceModel.class));

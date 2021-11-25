@@ -1,39 +1,29 @@
-package com.example.restapi.model.service;
-
-import com.example.restapi.model.entity.Review;
+package com.example.restapi.model.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-public class ProductServiceModel extends BaseServiceModel {
+public class ProductDetailsViewModel {
+    private Long id;
     private String title;
     private String description;
     private String imageURL;
     private BigDecimal price;
     private Integer quantity;
     private LocalDateTime created;
-    private CategoryServiceModel category;
-    private Set<Review> reviews;
+    private CategoryListViewModel category;
+    private Set<ProductReviewsViewModel> reviews;
 
-    public ProductServiceModel() {
+    public ProductDetailsViewModel() {
     }
 
-    public ProductServiceModel(String title, String description, String imageURL,
-                               BigDecimal price, Integer quantity, LocalDateTime created, CategoryServiceModel category, Set<Review> reviews) {
-        this.title = title;
-        this.description = description;
-        this.imageURL = imageURL;
-        this.price = price;
-        this.quantity = quantity;
-        this.created = created;
-        this.category = category;
-        this.reviews = reviews;
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public String toString() {
-        return getTitle();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -84,19 +74,19 @@ public class ProductServiceModel extends BaseServiceModel {
         this.imageURL = imageURL;
     }
 
-    public CategoryServiceModel getCategory() {
+    public CategoryListViewModel getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryServiceModel category) {
+    public void setCategory(CategoryListViewModel category) {
         this.category = category;
     }
 
-    public Set<Review> getReviews() {
+    public Set<ProductReviewsViewModel> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Set<Review> reviews) {
+    public void setReviews(Set<ProductReviewsViewModel> reviews) {
         this.reviews = reviews;
     }
 }

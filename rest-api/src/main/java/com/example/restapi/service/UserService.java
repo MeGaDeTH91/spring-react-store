@@ -7,7 +7,11 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel register(UserServiceModel userServiceModel);
 
-    boolean userExists(String username);
+    boolean existsByUsername(String username);
+
+    boolean existsById(Long id);
+
+    UserServiceModel getById(Long id);
 
     UserServiceModel getByUsername(String username);
 

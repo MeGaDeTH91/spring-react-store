@@ -43,7 +43,7 @@ public class UserController {
                             .map(DefaultMessageSourceResolvable::getDefaultMessage)));
         }
         UserServiceModel userServiceModel = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
-        if (userService.userExists(userServiceModel.getUsername())) {
+        if (userService.existsByUsername(userServiceModel.getUsername())) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(JSONResponse.jsonFromString(UserMessages.USERNAME_ALREADY_EXISTS));
