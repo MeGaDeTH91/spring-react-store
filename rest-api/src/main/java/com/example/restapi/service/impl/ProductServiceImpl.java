@@ -3,6 +3,7 @@ package com.example.restapi.service.impl;
 import com.example.restapi.model.entity.Product;
 import com.example.restapi.model.service.ProductUpdateServiceModel;
 import com.example.restapi.model.service.ProductServiceModel;
+import com.example.restapi.model.service.ReviewServiceModel;
 import com.example.restapi.repository.ProductRepository;
 import com.example.restapi.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -61,12 +62,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductServiceModel get(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (product == null) {
+        Product repoProduct = productRepository.findById(id).orElse(null);
+        if (repoProduct == null) {
             return null;
         }
-
-        return modelMapper.map(product, ProductServiceModel.class);
+        ProductServiceModel mappedProduct = modelMapper.map(repoProduct, ProductServiceModel.class);
+        if (mappedProduct.getReviews() == null && repoProduct.getReviews() != null) {
+            mappedProduct.setReviews(repoProduct.getReviews()
+                    .stream().map(review -> modelMapper.map(review, ReviewServiceModel.class))
+                    .collect(Collectors.toSet()));
+        }
+        return mappedProduct;
     }
 
     @Override

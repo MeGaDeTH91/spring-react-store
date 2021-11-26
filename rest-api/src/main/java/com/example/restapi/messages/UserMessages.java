@@ -19,5 +19,8 @@ public class UserMessages {
     public static final String PASSWORD_VALIDATION = "Password length must be more than 3 characters long.";
 
     // GET
-    public static final String USER_DOES_NOT_EXIST = "User does not exist.";
+    public static final String USER_DOES_NOT_EXIST = "User not found.";
+
+    // PUT
+    public static final String USER_MISMATCH = "Update is available only for current logged user.";
 }

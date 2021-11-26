@@ -4,9 +4,11 @@ import com.example.restapi.model.entity.ShoppingCart;
 import com.example.restapi.model.service.ShoppingCartServiceModel;
 
 public interface ShoppingCartService {
-    ShoppingCartServiceModel getUserCart(Long cartId);
+    ShoppingCartServiceModel create();
 
-    ShoppingCart create();
+    boolean addProduct(Long cartId, Long productId);
 
-    void update(ShoppingCartServiceModel cart);
+    boolean removeProduct(Long cartId, Long productId);
+
+    ShoppingCart get(Long id);
 }

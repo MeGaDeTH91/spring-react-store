@@ -1,7 +1,5 @@
 package com.example.restapi.model.service;
 
-import com.example.restapi.model.entity.Review;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,13 +12,13 @@ public class ProductServiceModel extends BaseServiceModel {
     private Integer quantity;
     private LocalDateTime created;
     private CategoryServiceModel category;
-    private Set<Review> reviews;
+    private Set<ReviewServiceModel> reviews;
 
     public ProductServiceModel() {
     }
 
     public ProductServiceModel(String title, String description, String imageURL,
-                               BigDecimal price, Integer quantity, LocalDateTime created, CategoryServiceModel category, Set<Review> reviews) {
+                               BigDecimal price, Integer quantity, LocalDateTime created, CategoryServiceModel category, Set<ReviewServiceModel> reviews) {
         this.title = title;
         this.description = description;
         this.imageURL = imageURL;
@@ -92,11 +90,11 @@ public class ProductServiceModel extends BaseServiceModel {
         this.category = category;
     }
 
-    public Set<Review> getReviews() {
+    public Set<ReviewServiceModel> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Set<Review> reviews) {
+    public void setReviews(Set<ReviewServiceModel> reviews) {
         this.reviews = reviews;
     }
 }

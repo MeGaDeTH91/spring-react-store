@@ -11,7 +11,7 @@ const UserReview = ({ content, product, index, date }) => {
         src={reviewLogo}
         className={styles["review-image"]}
         alt="review"
-      ></img>
+      />
       <p className={styles.description}>{`${index + 1} - ${content}`}</p>
       <div>
         <span className={styles.user}>

@@ -1,5 +1,6 @@
 package com.example.restapi.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -88,7 +89,7 @@ public class Product extends BaseEntity {
         this.category = category;
     }
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     public Set<Review> getReviews() {
         return reviews;
     }

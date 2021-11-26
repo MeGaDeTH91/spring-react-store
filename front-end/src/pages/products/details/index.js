@@ -37,8 +37,8 @@ class ProductDetailsPage extends Component {
 
     this.setState({
       product: result,
-      reviews: result.review_set.sort((a, b) =>
-        ("" + b.created_at).localeCompare("" + a.created_at)
+      reviews: result.reviews.sort((a, b) =>
+        ("" + b.created).localeCompare("" + a.created)
       ),
     });
   };

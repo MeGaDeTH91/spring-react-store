@@ -18,14 +18,14 @@ const ProfilePage = () => {
 
   const getUserInfo = async () => {
     await executeAuthGetRequest(
-      `http://127.0.0.1:8000/api/profile/${userContext.user.id}/`,
+      `http://127.0.0.1:8000/api/users/${userContext.user.id}`,
       (usersResponse) => {
         setUser(usersResponse);
 
-        if (usersResponse.review_set && usersResponse.review_set.length) {
+        if (usersResponse.reviews && usersResponse.reviews.length) {
           setReviews(
-            usersResponse.review_set.sort((a, b) =>
-              ("" + b.created_at).localeCompare("" + a.created_at)
+            usersResponse.reviews.sort((a, b) =>
+              ("" + b.created).localeCompare("" + a.created)
             )
           );
         }
@@ -57,7 +57,7 @@ const ProfilePage = () => {
   return (
     <PageLayout>
       <div className="container">
-        <h1 className="my-4">{`${user.first_name} ${user.last_name}`}</h1>
+        <h1 className="my-4">{`${user.firstName} ${user.lastName}`}</h1>
 
         <div className="row">
           <div className="col-md-8">
@@ -70,8 +70,8 @@ const ProfilePage = () => {
             <h3 className="my-3">
               Address: {user.address ? user.address : "Not provided"}
             </h3>
-            <EditButton title="Update info" onClick={editUser}></EditButton>
-            <EditButton title="My orders" onClick={myOrders}></EditButton>
+            <EditButton title="Update info" onClick={editUser} />
+            <EditButton title="My orders" onClick={myOrders} />
           </div>
         </div>
         <hr />
