@@ -3,6 +3,7 @@ package com.example.restapi.service.impl;
 import com.example.restapi.model.entity.Category;
 import com.example.restapi.model.service.CategoryServiceModel;
 import com.example.restapi.model.service.CategoryUpdateServiceModel;
+import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.repository.CategoryRepository;
 import com.example.restapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -44,12 +45,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryServiceModel get(Long id) {
-        Category category = categoryRepository.findById(id).orElse(null);
-        if (category == null) {
+        Category repoCategory = categoryRepository.findById(id).orElse(null);
+        if (repoCategory == null) {
             return null;
         }
-
-        return modelMapper.map(category, CategoryServiceModel.class);
+        CategoryServiceModel mappedCategory = modelMapper.map(repoCategory, CategoryServiceModel.class);
+        if (mappedCategory.getProducts() == null && repoCategory.getProducts() != null) {
+            mappedCategory.setProducts(repoCategory
+                    .getProducts()
+                    .stream()
+                    .map(product -> modelMapper.map(product, ProductServiceModel.class))
+                    .collect(Collectors.toSet()));
+        }
+        return mappedCategory;
     }
 
     @Override

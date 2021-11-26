@@ -1,8 +1,13 @@
-package com.example.restapi.model.service;
+package com.example.restapi.model.view;
+
+import com.example.restapi.model.service.BaseServiceModel;
+import com.example.restapi.model.service.ReviewServiceModel;
+import com.example.restapi.model.service.RoleServiceModel;
+import com.example.restapi.model.service.ShoppingCartServiceModel;
 
 import java.util.Set;
 
-public class UserServiceModel extends BaseServiceModel {
+public class UserDetailsViewModel extends BaseServiceModel {
     private String username;
     private String password;
     private String email;
@@ -12,18 +17,18 @@ public class UserServiceModel extends BaseServiceModel {
     private String lastName;
 
     private ShoppingCartServiceModel cart;
-    private Set<ReviewServiceModel> reviews;
     private Set<RoleServiceModel> authorities;
+    private Set<ReviewServiceModel> reviews;
 
-    public UserServiceModel() {
+    public UserDetailsViewModel() {
     }
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return getUsername();
     }
 
-    public UserServiceModel(String username, String password, String email, String firstName, String lastName) {
+    public UserDetailsViewModel(String username, String password, String email, String firstName, String lastName){
         this.username = username;
         this.password = password;
         this.email = email;

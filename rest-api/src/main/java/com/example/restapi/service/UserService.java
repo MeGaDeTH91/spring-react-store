@@ -15,6 +15,8 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getByUsername(String username);
 
+    UserServiceModel update(UserServiceModel userServiceModel);
+
     /*UserServiceModel editUserProfile(UserServiceModel userServiceModel, UserProfileEditBindingModel userProfileEditBindingModel);
 
     List<UserServiceModel> findAllUsers();
@@ -23,7 +25,5 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserById(String userId);
 
-    void changeUserRole(String userId, String role);
-
-    UserServiceModel findUserById(String id);*/
+    void changeUserRole(String userId, String role);*/
 }

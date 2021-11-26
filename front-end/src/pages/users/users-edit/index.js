@@ -15,8 +15,8 @@ import validateTextField from "../../../utils/validateField";
 const EditUserPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
 
   const notifications = useContext(NotificationContext);
@@ -26,20 +26,19 @@ const EditUserPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!validateTextField(first_name, "Please provide first name.", notifications) || 
-    !validateTextField(last_name, "Please provide last name.", notifications) ||
-    !validateTextField(email, "Please provide valid email address.", notifications) ||
-    !validateTextField(address, "Please provide valid delivery address.", notifications)) {
+    if (!validateTextField(firstName, "Please provide first name.", notifications) ||
+    !validateTextField(lastName, "Please provide last name.", notifications) ||
+    !validateTextField(email, "Please provide valid email address.", notifications)) {
       return;
     }
 
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/profile-edit/${userContext.user.id}/`,
+      `http://127.0.0.1:8000/api/users/${userContext.user.id}`,
       "PUT",
       {
         email,
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         address
       },
       (user) => {
@@ -58,12 +57,12 @@ const EditUserPage = () => {
 
   const getUser = useCallback(async () => {
     await executeAuthGetRequest(
-      `http://127.0.0.1:8000/api/profile-edit/${userContext.user.id}/`,
+      `http://127.0.0.1:8000/api/users/${userContext.user.id}`,
       (user) => {
         setUsername(user.username);
         setEmail(user.email);
-        setFirstName(user.first_name);
-        setLastName(user.last_name);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
         setAddress(user.address);
       },
       (error) => {
@@ -89,26 +88,26 @@ const EditUserPage = () => {
       <RegisterForm onSubmit={handleSubmit}>
         <Title title="Update user info" />
         <hr />
-        <DisabledInput id="username" value={username || ''} label="Username"></DisabledInput>
-        <Input id="email" value={email || ''} label="Email" onChange={(e) => setEmail(e.target.value)}></Input>
+        <DisabledInput id="username" value={username || ''} label="Username" />
+        <Input id="email" value={email || ''} label="Email" onChange={(e) => setEmail(e.target.value)} />
         <Input
           id="first_name"
-          value={first_name  || ''}
+          value={firstName  || ''}
           label="First Name"
           onChange={(e) => setFirstName(e.target.value)}
-        ></Input>
+        />
         <Input
           id="last_name"
-          value={last_name  || ''}
+          value={lastName  || ''}
           label="Last Name"
           onChange={(e) => setLastName(e.target.value)}
-        ></Input>
+        />
         <Input
           id="address"
           value={address  || ''}
           label="Address"
           onChange={(e) => setAddress(e.target.value)}
-        ></Input>
+        />
         <SubmitButton title="Update info" goBack={goBack} />
       </RegisterForm>
     </PageLayout>

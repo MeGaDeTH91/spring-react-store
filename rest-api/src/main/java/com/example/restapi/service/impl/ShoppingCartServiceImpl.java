@@ -7,8 +7,6 @@ import com.example.restapi.service.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
@@ -19,23 +17,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public ShoppingCartServiceModel getUserCart(Long cartId) {
-        Optional<ShoppingCart> cartEntityOpt = shoppingCartRepository.findById(cartId);
-        if (cartEntityOpt.isEmpty()) {
-            return null;
-        }
-
-        return modelMapper.map(cartEntityOpt.get(), ShoppingCartServiceModel.class);
-    }
 
     @Override
-    public ShoppingCart create() {
+    public ShoppingCartServiceModel create() {
         ShoppingCart cart = new ShoppingCart();
-        return shoppingCartRepository.saveAndFlush(cart);
+        return modelMapper.map(shoppingCartRepository.saveAndFlush(cart), ShoppingCartServiceModel.class);
     }
 
     @Override
-    public void update(ShoppingCartServiceModel cart) {
+    public boolean addProduct(Long cartId, Long productId) {
+        return false;
+    }
+
+    @Override
+    public boolean removeProduct(Long cartId, Long productId) {
+        return false;
+    }
+
+    @Override
+    public ShoppingCart get(Long id) {
+        return shoppingCartRepository.findById(id).orElse(null);
     }
 }

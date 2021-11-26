@@ -103,7 +103,6 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -150,7 +149,7 @@ public class User extends BaseEntity implements UserDetails {
         this.cart = cart;
     }
 
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewer", fetch = FetchType.EAGER)
     public Set<Review> getReviews() {
         return reviews;
     }
