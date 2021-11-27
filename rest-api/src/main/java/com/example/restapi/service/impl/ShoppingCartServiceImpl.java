@@ -2,6 +2,7 @@ package com.example.restapi.service.impl;
 
 import com.example.restapi.model.entity.Product;
 import com.example.restapi.model.entity.ShoppingCart;
+import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.model.service.ShoppingCartServiceModel;
 import com.example.restapi.repository.ShoppingCartRepository;
 import com.example.restapi.service.ProductService;
@@ -32,11 +33,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean addProduct(Long cartId, Long productId) {
-        var cart = shoppingCartRepository.findById(cartId).orElse(null);
+        ShoppingCart cart = getCart(cartId);
         if (cart == null) {
             return false;
         }
-        var product = productService.get(productId);
+        var product = getProduct(productId);
+        if (product == null) {
+            return false;
+        }
+
         cart.getProducts().add(modelMapper.map(product, Product.class));
 
         shoppingCartRepository.save(cart);
@@ -45,14 +50,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean removeProduct(Long cartId, Long productId) {
-        var cart = shoppingCartRepository.findById(cartId).orElse(null);
+        ShoppingCart cart = getCart(cartId);
         if (cart == null) {
             return false;
         }
-        var product = productService.get(productId);
+        var product = getProduct(productId);
         if (product == null) {
             return false;
         }
+
         cart.getProducts().removeIf(cartProduct -> Objects.equals(cartProduct.getId(), productId));
 
         shoppingCartRepository.save(cart);
@@ -61,6 +67,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean emptyCart(Long cartId) {
+        if (cartId == null) {
+            return false;
+        }
+
         var cart = shoppingCartRepository.findById(cartId).orElse(null);
         if (cart == null || cart.getProducts() == null) {
             return false;
@@ -77,6 +87,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart get(Long id) {
+        if (id == null) {
+            return null;
+        }
         return shoppingCartRepository.findById(id).orElse(null);
+    }
+
+    private ShoppingCart getCart(Long cartId) {
+        if (cartId == null) {
+            return null;
+        }
+        return shoppingCartRepository.findById(cartId).orElse(null);
+    }
+
+    private ProductServiceModel getProduct(Long productId) {
+        if (productId == null) {
+            return null;
+        }
+        return productService.get(productId);
     }
 }

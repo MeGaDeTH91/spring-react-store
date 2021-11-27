@@ -1,7 +1,8 @@
 package com.example.restapi.web.controllers;
 
 import com.example.restapi.config.JwtTokenUtil;
-import com.example.restapi.messages.UserMessages;
+import com.example.restapi.constants.RolesData;
+import com.example.restapi.constants.UserMessages;
 import com.example.restapi.model.response.UserResponse;
 import com.example.restapi.model.response.impl.UserAuthResponseModel;
 import com.example.restapi.model.response.impl.UserVerifyResponseModel;
@@ -103,7 +104,8 @@ public class AuthenticationController {
     }
 
     private void populateUserResponseFields(UserDetails userDetails, UserResponse userResponse) {
-        userResponse.setAdministrator(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        userResponse.setRoot(userDetails.getAuthorities().contains(new SimpleGrantedAuthority(RolesData.ROLE_ROOT)));
+        userResponse.setAdministrator(userDetails.getAuthorities().contains(new SimpleGrantedAuthority(RolesData.ROLE_ADMIN)));
         userResponse
                 .setActive(userDetails.isAccountNonExpired() && userDetails.isEnabled() && userDetails.isAccountNonLocked());
     }

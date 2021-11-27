@@ -1,6 +1,6 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.CategoryMessages;
+import com.example.restapi.constants.CategoryMessages;
 import com.example.restapi.model.binding.CategoryBindingModel;
 import com.example.restapi.model.service.CategoryServiceModel;
 import com.example.restapi.model.service.CategoryUpdateServiceModel;

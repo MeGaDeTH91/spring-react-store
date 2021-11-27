@@ -1,5 +1,6 @@
 package com.example.restapi.service.impl;
 
+import com.example.restapi.constants.RolesData;
 import com.example.restapi.model.entity.Role;
 import com.example.restapi.model.service.RoleServiceModel;
 import com.example.restapi.repository.RoleRepository;
@@ -8,7 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,8 +27,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void seedRoles() {
         if (this.roleRepository.count() == 0) {
-            this.roleRepository.saveAndFlush(new Role("ROLE_USER"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
+            this.roleRepository.saveAndFlush(new Role(RolesData.ROLE_USER));
+            this.roleRepository.saveAndFlush(new Role(RolesData.ROLE_ADMIN));
+            this.roleRepository.saveAndFlush(new Role(RolesData.ROLE_ROOT));
         }
     }
 
@@ -43,13 +44,5 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleServiceModel findByAuthority(String authority) {
         return this.modelMapper.map(this.roleRepository.findByAuthority(authority), RoleServiceModel.class);
-    }
-
-    @Override
-    public List<RoleServiceModel> findAllRoles() {
-        return this.roleRepository.findAll()
-                .stream()
-                .map(role -> this.modelMapper.map(role, RoleServiceModel.class))
-                .collect(Collectors.toList());
     }
 }

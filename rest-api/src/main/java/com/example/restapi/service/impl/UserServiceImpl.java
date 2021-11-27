@@ -1,5 +1,7 @@
 package com.example.restapi.service.impl;
 
+import com.example.restapi.constants.RolesData;
+import com.example.restapi.model.entity.Role;
 import com.example.restapi.model.entity.User;
 import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.model.service.ReviewServiceModel;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,11 +49,13 @@ public class UserServiceImpl implements UserService {
             userServiceModel.setAuthorities(this.roleService.findAll());
         } else {
             userServiceModel.setAuthorities(new LinkedHashSet<>());
-            userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+            userServiceModel.getAuthorities().add(this.roleService.findByAuthority(RolesData.ROLE_USER));
         }
 
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setPassword(this.passwordEncoder.encode(userServiceModel.getPassword()));
+        user.setAccountNonLocked(true);
+        user.setEnabled(true);
 
         return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
     }
@@ -95,22 +100,81 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return null;
         }
-        mapUserData(userServiceModel, user);
+        mapUserUpdateData(userServiceModel, user);
 
         return modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
     }
 
-    private void mapUserData(UserServiceModel userServiceModel, User user) {
-        if (userServiceModel.getEmail() != null && !userServiceModel.getEmail().equals(user.getEmail())){
+    @Override
+    public List<UserServiceModel> getAllUsers() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(dbUser -> {
+                    UserServiceModel mappedUser = modelMapper.map(dbUser, UserServiceModel.class);
+                    mapAuthorities(dbUser, mappedUser);
+
+                    return mappedUser;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserServiceModel changeAdminStatus(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null || user.getAuthorities() == null) {
+            return null;
+        }
+
+        if (userIsAdmin(user)) {
+            user.getAuthorities().removeIf(role -> role.getAuthority().equals(RolesData.ROLE_ADMIN));
+        } else {
+            RoleServiceModel adminRole = roleService.findByAuthority(RolesData.ROLE_ADMIN);
+            user.getAuthorities().add(modelMapper.map(adminRole, Role.class));
+        }
+        userRepository.save(user);
+
+        return modelMapper.map(user, UserServiceModel.class);
+    }
+
+    @Override
+    public UserServiceModel changeActivityStatus(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return null;
+        }
+
+        if (userIsActive(user)) {
+            user.setAccountNonLocked(false);
+            user.setEnabled(false);
+        } else {
+            user.setAccountNonLocked(true);
+            user.setEnabled(true);
+        }
+        userRepository.save(user);
+
+        return modelMapper.map(user, UserServiceModel.class);
+    }
+
+    private boolean userIsActive(User user) {
+        return user.isEnabled() && user.isAccountNonLocked();
+    }
+
+    private boolean userIsAdmin(User user) {
+        return user.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals(RolesData.ROLE_ADMIN));
+    }
+
+    private void mapUserUpdateData(UserServiceModel userServiceModel, User user) {
+        if (userServiceModel.getEmail() != null && !userServiceModel.getEmail().equals(user.getEmail())) {
             user.setEmail(userServiceModel.getEmail());
         }
-        if (userServiceModel.getFirstName() != null && !userServiceModel.getFirstName().equals(user.getFirstName())){
+        if (userServiceModel.getFirstName() != null && !userServiceModel.getFirstName().equals(user.getFirstName())) {
             user.setFirstName(userServiceModel.getFirstName());
         }
-        if (userServiceModel.getLastName() != null && !userServiceModel.getLastName().equals(user.getLastName())){
+        if (userServiceModel.getLastName() != null && !userServiceModel.getLastName().equals(user.getLastName())) {
             user.setLastName(userServiceModel.getLastName());
         }
-        if (userServiceModel.getAddress() != null && !userServiceModel.getAddress().equals(user.getAddress())){
+        if (userServiceModel.getAddress() != null && !userServiceModel.getAddress().equals(user.getAddress())) {
             user.setAddress(userServiceModel.getAddress());
         }
     }
@@ -123,13 +187,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void syncNestedCollections(User repoUser, UserServiceModel mappedUser) {
-        if (mappedUser.getAuthorities() == null && repoUser.getAuthorities() != null) {
-            mappedUser.setAuthorities(repoUser
-                    .getAuthorities()
-                    .stream()
-                    .map(role -> modelMapper.map(role, RoleServiceModel.class))
-                    .collect(Collectors.toSet()));
-        }
+        mapAuthorities(repoUser, mappedUser);
         if (mappedUser.getReviews() == null && repoUser.getReviews() != null) {
             mappedUser.setReviews(repoUser
                     .getReviews()
@@ -140,9 +198,19 @@ public class UserServiceImpl implements UserService {
         if (mappedUser.getCart().getProducts() == null && repoUser.getCart().getProducts() != null) {
             mappedUser.getCart().setProducts(repoUser
                     .getCart()
-                            .getProducts()
+                    .getProducts()
                     .stream()
                     .map(review -> modelMapper.map(review, ProductServiceModel.class))
+                    .collect(Collectors.toSet()));
+        }
+    }
+
+    private void mapAuthorities(User repoUser, UserServiceModel mappedUser) {
+        if (mappedUser.getAuthorities() == null && repoUser.getAuthorities() != null) {
+            mappedUser.setAuthorities(repoUser
+                    .getAuthorities()
+                    .stream()
+                    .map(role -> modelMapper.map(role, RoleServiceModel.class))
                     .collect(Collectors.toSet()));
         }
     }

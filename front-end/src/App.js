@@ -65,8 +65,9 @@ const App = (props) => {
         logIn({
           id: response["id"],
           username: response["username"],
-          is_superuser: response["administrator"],
-          is_active: response["active"],
+          isRoot: response["root"],
+          isSuperUser: response["administrator"],
+          isActive: response["active"],
         });
 
         setLoading(false);

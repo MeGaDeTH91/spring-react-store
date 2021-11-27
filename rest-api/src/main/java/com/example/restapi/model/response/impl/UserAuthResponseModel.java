@@ -5,6 +5,7 @@ import com.example.restapi.model.response.UserResponse;
 public class UserAuthResponseModel implements UserResponse {
     private Long id;
     private String username;
+    private Boolean isRoot;
     private Boolean isAdministrator;
     private Boolean isActive;
     private String token;
@@ -36,10 +37,20 @@ public class UserAuthResponseModel implements UserResponse {
         this.username = username;
     }
 
+    public Boolean getRoot() {
+        return isRoot;
+    }
+
+    @Override
+    public void setRoot(Boolean root) {
+        isRoot = root;
+    }
+
     public Boolean getAdministrator() {
         return isAdministrator;
     }
-
+    
+    @Override
     public void setAdministrator(Boolean administrator) {
         isAdministrator = administrator;
     }
@@ -48,6 +59,7 @@ public class UserAuthResponseModel implements UserResponse {
         return isActive;
     }
 
+    @Override
     public void setActive(Boolean active) {
         isActive = active;
     }

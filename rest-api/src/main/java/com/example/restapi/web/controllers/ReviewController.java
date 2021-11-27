@@ -1,8 +1,8 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.ProductMessages;
-import com.example.restapi.messages.ReviewMessages;
-import com.example.restapi.messages.UserMessages;
+import com.example.restapi.constants.ProductMessages;
+import com.example.restapi.constants.ReviewMessages;
+import com.example.restapi.constants.UserMessages;
 import com.example.restapi.model.binding.ReviewBindingModel;
 import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.model.service.ReviewServiceModel;

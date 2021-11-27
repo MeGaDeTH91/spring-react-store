@@ -7,12 +7,20 @@ import executeAuthRequest from "../../../utils/executeAuthRequest";
 import NotificationContext from "../../../NotificationContext";
 import { useHistory } from "react-router-dom";
 
-const TableRow = ({ user, index }) => {
+const TableRow = ({ roleBtn, user, index }) => {
   const notifications = useContext(NotificationContext);
   const history = useHistory();
 
+  const userIsRoot = () => {
+    return user.root ? (
+        <Checkbox disabled checked type="checkbox" />
+    ) : (
+        <Checkbox disabled type="checkbox" />
+    );
+  };
+
   const userIsAdmin = () => {
-    return user.is_superuser ? (
+    return user.administrator ? (
       <Checkbox disabled checked type="checkbox" />
     ) : (
       <Checkbox disabled type="checkbox" />
@@ -20,7 +28,7 @@ const TableRow = ({ user, index }) => {
   };
 
   const userIsActive = () => {
-    return user.is_active ? (
+    return user.active ? (
       <Checkbox disabled checked type="checkbox" />
     ) : (
       <Checkbox disabled type="checkbox" />
@@ -28,16 +36,16 @@ const TableRow = ({ user, index }) => {
   };
 
   const roleButton = () => {
-    return user.is_superuser ? "Revoke" : "Make admin";
+    return user.administrator ? "Revoke" : "Make admin";
   };
 
   const statusButton = () => {
-    return user.is_active ? "Ban" : "Unban";
+    return user.active ? "Ban" : "Unban";
   };
 
   const toggleRole = async () => {
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/users/change-role/${user.id}/`,
+      `http://127.0.0.1:8000/api/users/change-role/${user.id}`,
       "PUT",
       {},
       (usersResponse) => {
@@ -56,7 +64,7 @@ const TableRow = ({ user, index }) => {
 
   const toggleStatus = async () => {
     await executeAuthRequest(
-      `http://127.0.0.1:8000/api/users/change-status/${user.id}/`,
+      `http://127.0.0.1:8000/api/users/change-status/${user.id}`,
       "PUT",
       {},
       (usersResponse) => {
@@ -82,13 +90,14 @@ const TableRow = ({ user, index }) => {
       <TD>{`${index + 1}.`}</TD>
       <TD>{user.username}</TD>
       <TD>{user.email}</TD>
-      <TD>{`${user.first_name} ${user.last_name}`}</TD>
+      <TD>{`${user.firstName} ${user.lastName}`}</TD>
       {user.address ? <TD>{user.address}</TD> : <TD>Not provided</TD>}
       <TD>{userIsActive()}</TD>
+      <TD>{userIsRoot()}</TD>
       <TD>{userIsAdmin()}</TD>
       <TD>
         <DeleteButton title={statusButton()} onClick={toggleStatus} />
-        <EditButton title={roleButton()} onClick={toggleRole} />
+        {roleBtn ? <EditButton title={roleButton()} onClick={toggleRole} /> : <span/>}
       </TD>
     </tr>
   );

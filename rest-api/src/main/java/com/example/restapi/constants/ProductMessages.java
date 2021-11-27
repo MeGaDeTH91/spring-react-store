@@ -1,4 +1,4 @@
-package com.example.restapi.messages;
+package com.example.restapi.constants;
 
 public class ProductMessages {
     public static final String ERROR_GETTING_ALL_PRODUCTS = "Error occurred while getting all products!";

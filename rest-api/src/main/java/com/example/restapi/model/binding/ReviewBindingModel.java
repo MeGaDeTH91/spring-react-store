@@ -1,6 +1,6 @@
 package com.example.restapi.model.binding;
 
-import com.example.restapi.messages.ReviewMessages;
+import com.example.restapi.constants.ReviewMessages;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
