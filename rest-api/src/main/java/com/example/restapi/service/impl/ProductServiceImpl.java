@@ -66,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
         if (repoProduct == null) {
             return null;
         }
+        repoProduct.getCarts().clear();
         ProductServiceModel mappedProduct = modelMapper.map(repoProduct, ProductServiceModel.class);
         if (mappedProduct.getReviews() == null && repoProduct.getReviews() != null) {
             mappedProduct.setReviews(repoProduct.getReviews()
@@ -77,6 +78,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
+        Product repoProduct = productRepository.findById(id).orElse(null);
+        if (repoProduct == null || repoProduct.getCarts() == null) {
+            return;
+        }
+        repoProduct.getCarts().clear();
+        productRepository.save(repoProduct);
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public void reduceQuantity(Long id) {
+        Product repoProduct = productRepository.findById(id).orElse(null);
+        if (repoProduct == null || repoProduct.getCarts() == null) {
+            return;
+        }
+
+        repoProduct.setQuantity(repoProduct.getQuantity() - 1);
+        productRepository.save(repoProduct);
     }
 }

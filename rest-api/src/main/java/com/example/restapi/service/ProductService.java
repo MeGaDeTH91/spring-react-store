@@ -19,4 +19,6 @@ public interface ProductService {
     ProductServiceModel get(Long id);
 
     void delete(Long id);
+
+    void reduceQuantity(Long id);
 }

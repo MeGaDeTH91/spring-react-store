@@ -4,21 +4,23 @@ import { useHistory } from "react-router-dom";
 import executeAuthGetRequest from "../../utils/executeAuthGETRequest";
 import NotificationContext from "../../NotificationContext";
 import ListUserOrders from "../../components/user-orders/user-list";
+import UserContext from "../../UserContext";
 
 const OrdersPage = () => {
   const notifications = useContext(NotificationContext);
+  const userContext = useContext(UserContext);
   const history = useHistory();
 
   const [orders, setOrders] = useState([]);
 
   const getUserInfo = async () => {
     await executeAuthGetRequest(
-      `http://127.0.0.1:8000/api/orders/all/`,
+      `http://127.0.0.1:8000/api/orders/${userContext.user.id}`,
       (response) => {
-        if (response.order_set && response.order_set.length) {
+        if (response.orders && response.orders.length) {
           setOrders(
-            response.order_set.sort((a, b) =>
-              ("" + b.created_at).localeCompare("" + a.created_at)
+            response.orders.sort((a, b) =>
+              ("" + b.created).localeCompare("" + a.created)
             )
           );
         }

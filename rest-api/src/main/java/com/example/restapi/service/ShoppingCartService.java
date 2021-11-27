@@ -10,5 +10,7 @@ public interface ShoppingCartService {
 
     boolean removeProduct(Long cartId, Long productId);
 
+    boolean emptyCart(Long cartId);
+
     ShoppingCart get(Long id);
 }

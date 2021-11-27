@@ -20,6 +20,7 @@ public class UserMessages {
 
     // GET
     public static final String USER_DOES_NOT_EXIST = "User not found.";
+    public static final String USER_CART_IS_EMPTY = "Cannot create order with empty cart.";
 
     // PUT
     public static final String USER_MISMATCH = "Update is available only for current logged user.";

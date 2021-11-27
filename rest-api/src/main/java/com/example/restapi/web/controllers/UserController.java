@@ -81,7 +81,7 @@ public class UserController {
         }
         modelMapper.map(userUpdateBindingModel, userServiceModel);
         UserServiceModel updatedUser = userService.update(userServiceModel);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(modelMapper.map(updatedUser, UserDetailsViewModel.class));
     }
 
     @PostMapping(value = "/register",
@@ -90,7 +90,6 @@ public class UserController {
                                            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
-            ;
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(JSONResponse.jsonFromStream(bindingResult
@@ -114,6 +113,6 @@ public class UserController {
                     .body(JSONResponse.jsonFromString(UserMessages.REGISTRATION_NOT_SUCCESSFUL));
         }
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(modelMapper.map(user, UserDetailsViewModel.class));
     }
 }

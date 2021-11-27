@@ -94,7 +94,7 @@ class ProductDetailsPage extends Component {
         {userIsLogged ? (
           <CreateProductForm onSubmit={this.handleSubmit}>
             <h6 className="text-center">
-              You own this product? Please share your feedback...
+              You own this product? Please share your feedback using 10 or more characters...
             </h6>
             <TextAreaActive
               id="review"
@@ -188,7 +188,7 @@ class ProductDetailsPage extends Component {
                 <EditButton
                   title="Edit product"
                   onClick={this.editProduct}
-                ></EditButton>
+                />
               ) : null}
               {userIsAdministrator ? (
                 <DeleteButton
