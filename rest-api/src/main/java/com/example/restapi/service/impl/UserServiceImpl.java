@@ -1,6 +1,7 @@
 package com.example.restapi.service.impl;
 
 import com.example.restapi.model.entity.User;
+import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.model.service.ReviewServiceModel;
 import com.example.restapi.model.service.RoleServiceModel;
 import com.example.restapi.model.service.UserServiceModel;
@@ -134,6 +135,14 @@ public class UserServiceImpl implements UserService {
                     .getReviews()
                     .stream()
                     .map(review -> modelMapper.map(review, ReviewServiceModel.class))
+                    .collect(Collectors.toSet()));
+        }
+        if (mappedUser.getCart().getProducts() == null && repoUser.getCart().getProducts() != null) {
+            mappedUser.getCart().setProducts(repoUser
+                    .getCart()
+                            .getProducts()
+                    .stream()
+                    .map(review -> modelMapper.map(review, ProductServiceModel.class))
                     .collect(Collectors.toSet()));
         }
     }

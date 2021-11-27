@@ -1,5 +1,7 @@
 package com.example.restapi.model.view;
 
+import com.example.restapi.model.service.ShoppingCartServiceModel;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class ProductDetailsViewModel {
     private Integer quantity;
     private LocalDateTime created;
     private CategoryListViewModel category;
+    private Set<ShoppingCartServiceModel> carts;
     private Set<ProductReviewsViewModel> reviews;
 
     public ProductDetailsViewModel() {
@@ -88,5 +91,13 @@ public class ProductDetailsViewModel {
 
     public void setReviews(Set<ProductReviewsViewModel> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<ShoppingCartServiceModel> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<ShoppingCartServiceModel> carts) {
+        this.carts = carts;
     }
 }

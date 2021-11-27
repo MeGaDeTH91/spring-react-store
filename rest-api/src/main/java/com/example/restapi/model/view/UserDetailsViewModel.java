@@ -1,15 +1,13 @@
 package com.example.restapi.model.view;
 
-import com.example.restapi.model.service.BaseServiceModel;
 import com.example.restapi.model.service.ReviewServiceModel;
 import com.example.restapi.model.service.RoleServiceModel;
 import com.example.restapi.model.service.ShoppingCartServiceModel;
 
 import java.util.Set;
 
-public class UserDetailsViewModel extends BaseServiceModel {
+public class UserDetailsViewModel {
     private String username;
-    private String password;
     private String email;
     private String address;
 
@@ -28,9 +26,8 @@ public class UserDetailsViewModel extends BaseServiceModel {
         return getUsername();
     }
 
-    public UserDetailsViewModel(String username, String password, String email, String firstName, String lastName){
+    public UserDetailsViewModel(String username, String email, String firstName, String lastName){
         this.username = username;
-        this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,14 +39,6 @@ public class UserDetailsViewModel extends BaseServiceModel {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {

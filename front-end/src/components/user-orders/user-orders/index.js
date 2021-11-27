@@ -5,7 +5,7 @@ import TextLink from "../../text-link";
 
 const UserOrder = ( { order, index } ) => {
 
-  const formattedDate = order.created_at.slice(0, 10);
+  const formattedDate = order.created.slice(0, 10);
 
   return (
     <div className={styles.container}>
@@ -13,7 +13,7 @@ const UserOrder = ( { order, index } ) => {
         src={orderLogo}
         className={styles["order-image"]}
         alt="order"
-      ></img>
+      />
       <p className={styles.description}>{`${index + 1} - #Order: ${order.id}`}</p>
       <div>
         <span className={styles.user}>

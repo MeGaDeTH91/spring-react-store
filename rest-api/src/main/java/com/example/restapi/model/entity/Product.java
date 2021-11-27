@@ -4,6 +4,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,6 +25,7 @@ public class Product extends BaseEntity {
     private LocalDateTime created;
     private Category category;
     private Set<Review> reviews;
+    private Set<ShoppingCart> carts;
 
     public Product() {
     }
@@ -101,5 +105,18 @@ public class Product extends BaseEntity {
     @Override
     public String toString() {
         return title;
+    }
+
+    @ManyToMany(targetEntity = ShoppingCart.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "carts_products",
+            joinColumns = @JoinColumn(name = "products_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
+    )
+    public Set<ShoppingCart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<ShoppingCart> carts) {
+        this.carts = carts;
     }
 }
