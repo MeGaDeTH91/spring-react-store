@@ -1,7 +1,7 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.ProductMessages;
-import com.example.restapi.messages.UserMessages;
+import com.example.restapi.constants.OrderMessages;
+import com.example.restapi.constants.UserMessages;
 import com.example.restapi.model.service.OrderServiceModel;
 import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.model.view.OrderViewModel;
@@ -52,7 +52,7 @@ public class OrdersController {
         if (orders == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(JSONResponse.jsonFromString("Problem occurred while getting user orders."));
+                    .body(JSONResponse.jsonFromString(OrderMessages.ERROR_GETTING_ORDERS));
         }
 
         OrdersCollectionModel resultOrders = new OrdersCollectionModel();
@@ -70,23 +70,16 @@ public class OrdersController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> create(HttpServletRequest request) throws IOException {
-        Long userId = getUserId(request);
-        if (userId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
-        }
-
-        UserServiceModel user = userService.getById(userId);
+        UserServiceModel user = getUser(request);
         if (user == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(JSONResponse.jsonFromString(UserMessages.USER_DOES_NOT_EXIST));
+                    .body(JSONResponse.jsonFromString(OrderMessages.ERROR_CREATING_ORDER));
         }
         if (user.getCart() == null || user.getCart().getProducts().isEmpty()) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(JSONResponse.jsonFromString(UserMessages.USER_CART_IS_EMPTY));
+                    .body(JSONResponse.jsonFromString(OrderMessages.USER_CART_IS_EMPTY));
         }
 
         OrderServiceModel order = new OrderServiceModel();
@@ -94,75 +87,67 @@ public class OrdersController {
         order.setProducts(user.getCart().getProducts());
 
         OrderServiceModel resultOrder = orderService.create(order);
-        if (resultOrder == null) {
+        boolean cartIsEmpty = shoppingCartService.emptyCart(user.getCart().getId());
+        if (resultOrder == null || !cartIsEmpty) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                    .body(JSONResponse.jsonFromString(OrderMessages.ERROR_CREATING_ORDER));
         }
-
-        shoppingCartService.emptyCart(user.getCart().getId());
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                .body(JSONResponse.jsonFromString(OrderMessages.SUCCESSFUL_ORDER));
     }
 
-    @PostMapping(value = "/add-to-cart/{id}",
+    @PostMapping(value = "/add-to-cart/{productId}",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> addToCart(@PathVariable Long id, HttpServletRequest request) throws IOException {
-        Long userId = getUserId(request);
-        if (id == null || userId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
-        }
-
-        UserServiceModel user = userService.getById(userId);
+    public ResponseEntity<Object> addToCart(@PathVariable Long productId, HttpServletRequest request) throws IOException {
+        UserServiceModel user = getUser(request);
         if (user == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(JSONResponse.jsonFromString(UserMessages.USER_DOES_NOT_EXIST));
         }
 
-        if (shoppingCartService.addProduct(user.getCart().getId(), id)) {
+        if (shoppingCartService.addProduct(user.getCart().getId(), productId)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                    .body(JSONResponse.jsonFromString(OrderMessages.ADDED_TO_CART_SUCCESS));
         } else {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                    .body(JSONResponse.jsonFromString(OrderMessages.ADDED_TO_CART_ERROR));
         }
     }
 
-    @DeleteMapping(value = "/remove-from-cart/{id}",
+    @DeleteMapping(value = "/remove-from-cart/{productId}",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> removeFromCart(@PathVariable Long id, HttpServletRequest request) throws IOException {
-        Long userId = getUserId(request);
-        if (id == null || userId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
-        }
-
-        UserServiceModel user = userService.getById(userId);
+    public ResponseEntity<Object> removeFromCart(@PathVariable Long productId, HttpServletRequest request) throws IOException {
+        UserServiceModel user = getUser(request);
         if (user == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(JSONResponse.jsonFromString(UserMessages.USER_DOES_NOT_EXIST));
         }
 
-        if (shoppingCartService.removeProduct(user.getCart().getId(), id)) {
+        if (shoppingCartService.removeProduct(user.getCart().getId(), productId)) {
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                    .body(JSONResponse.jsonFromString(OrderMessages.REMOVED_FROM_CART_SUCCESS));
         } else {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(JSONResponse.jsonFromString(ProductMessages.UPDATE_NOT_SUCCESSFUL));
+                    .body(JSONResponse.jsonFromString(OrderMessages.REMOVED_FROM_CART_ERROR));
         }
+    }
+
+    private UserServiceModel getUser(HttpServletRequest request) throws IOException {
+        Long userId = getUserId(request);
+        if (userId == null) {
+            return null;
+        }
+        return userService.getById(userId);
     }
 
     private Long getUserId(HttpServletRequest request) throws IOException {
@@ -172,6 +157,10 @@ public class OrdersController {
             return null;
         }
 
-        return Long.parseLong(userId);
+        try {
+            return Long.parseLong(userId);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

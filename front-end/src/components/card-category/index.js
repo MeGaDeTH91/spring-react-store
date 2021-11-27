@@ -10,7 +10,7 @@ const CardCategory = ({ categoryId, imageURL, title }) => {
   const context = useContext(UserContext);
 
   const { user } = context;
-  const userIsAdministrator = user && user.is_superuser;
+  const userIsAdministrator = user && user.isSuperUser;
 
   const onDetails = () => {
     history.push(`/categories/category/${categoryId}`);

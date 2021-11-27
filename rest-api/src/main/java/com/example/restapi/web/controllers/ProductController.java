@@ -1,13 +1,12 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.ProductMessages;
+import com.example.restapi.constants.ProductMessages;
 import com.example.restapi.model.binding.ProductBindingModel;
 import com.example.restapi.model.service.CategoryServiceModel;
 import com.example.restapi.model.service.ProductServiceModel;
 import com.example.restapi.model.service.ProductUpdateServiceModel;
 import com.example.restapi.model.view.ProductDetailsViewModel;
 import com.example.restapi.service.ProductService;
-import com.example.restapi.service.ShoppingCartService;
 import com.example.restapi.util.JSONResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -33,12 +32,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
-    private final ShoppingCartService shoppingCartService;
     private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, ShoppingCartService shoppingCartService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, ModelMapper modelMapper) {
         this.productService = productService;
-        this.shoppingCartService = shoppingCartService;
         this.modelMapper = modelMapper;
     }
 

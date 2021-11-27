@@ -1,6 +1,6 @@
 package com.example.restapi.model.binding;
 
-import com.example.restapi.messages.UserMessages;
+import com.example.restapi.constants.UserMessages;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

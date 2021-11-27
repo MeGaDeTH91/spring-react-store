@@ -1,6 +1,6 @@
 package com.example.restapi.model.binding;
 
-import com.example.restapi.messages.CategoryMessages;
+import com.example.restapi.constants.CategoryMessages;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotNull;

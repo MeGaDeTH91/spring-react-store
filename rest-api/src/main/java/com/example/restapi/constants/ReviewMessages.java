@@ -1,4 +1,4 @@
-package com.example.restapi.messages;
+package com.example.restapi.constants;
 
 public class ReviewMessages {
     public static final String CREATION_NOT_SUCCESSFUL = "Review creation was not successful.";

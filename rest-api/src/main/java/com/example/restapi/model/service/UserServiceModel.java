@@ -11,6 +11,9 @@ public class UserServiceModel extends BaseServiceModel {
     private String firstName;
     private String lastName;
 
+    private boolean accountNonLocked;
+    private boolean enabled;
+
     private ShoppingCartServiceModel cart;
     private Set<ReviewServiceModel> reviews;
     private Set<RoleServiceModel> authorities;
@@ -101,5 +104,21 @@ public class UserServiceModel extends BaseServiceModel {
 
     public void setReviews(Set<ReviewServiceModel> reviews) {
         this.reviews = reviews;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

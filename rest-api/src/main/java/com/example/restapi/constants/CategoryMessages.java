@@ -1,4 +1,4 @@
-package com.example.restapi.messages;
+package com.example.restapi.constants;
 
 public class CategoryMessages {
     public static final String ERROR_GETTING_ALL_CATEGORIES = "Error occurred while getting all categories!";

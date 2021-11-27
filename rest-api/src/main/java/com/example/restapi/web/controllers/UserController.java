@@ -1,11 +1,13 @@
 package com.example.restapi.web.controllers;
 
-import com.example.restapi.messages.UserMessages;
+import com.example.restapi.constants.RolesData;
+import com.example.restapi.constants.UserMessages;
 import com.example.restapi.model.binding.UserRegisterBindingModel;
 import com.example.restapi.model.binding.UserUpdateBindingModel;
 import com.example.restapi.model.service.ShoppingCartServiceModel;
 import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.model.view.UserDetailsViewModel;
+import com.example.restapi.model.view.UserListViewModel;
 import com.example.restapi.service.ShoppingCartService;
 import com.example.restapi.service.UserService;
 import com.example.restapi.util.JSONResponse;
@@ -25,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -38,6 +42,62 @@ public class UserController {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping(value = "/all",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> getAll() {
+        List<UserServiceModel> dbUsers = userService.getAllUsers();
+        if (dbUsers == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(JSONResponse.jsonFromString(UserMessages.NO_USERS_DATA));
+        }
+
+        List<UserListViewModel> users = dbUsers
+                .stream()
+                .map(currUser -> {
+                    UserListViewModel mappedUser = modelMapper.map(currUser, UserListViewModel.class);
+                    mapUserFields(currUser, mappedUser);
+
+                    return mappedUser;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping(value = "/change-role/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROOT')")
+    public ResponseEntity<Object> changeRole(@PathVariable Long id) {
+        UserServiceModel user = userService.getById(id);
+        if (user == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(JSONResponse.jsonFromString(UserMessages.USER_DOES_NOT_EXIST));
+        }
+
+        user = userService.changeAdminStatus(user.getId());
+
+        return ResponseEntity.ok(modelMapper.map(user, UserDetailsViewModel.class));
+    }
+
+    @PutMapping(value = "/change-status/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> changeStatus(@PathVariable Long id) {
+        UserServiceModel user = userService.getById(id);
+        if (user == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(JSONResponse.jsonFromString(UserMessages.USER_DOES_NOT_EXIST));
+        }
+
+        user = userService.changeActivityStatus(user.getId());
+
+        return ResponseEntity.ok(modelMapper.map(user, UserDetailsViewModel.class));
     }
 
     @GetMapping(value = "/{id}",
@@ -114,5 +174,15 @@ public class UserController {
         }
 
         return ResponseEntity.ok(modelMapper.map(user, UserDetailsViewModel.class));
+    }
+
+    private void mapUserFields(UserServiceModel dbUser, UserListViewModel mappedUser) {
+        if (dbUser.getAuthorities() == null) {
+            return;
+        }
+        mappedUser.setRoot(dbUser.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals(RolesData.ROLE_ROOT)));
+        mappedUser.setAdministrator(dbUser.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals(RolesData.ROLE_ADMIN)));
+        mappedUser
+                .setActive(dbUser.isEnabled() && dbUser.isAccountNonLocked());
     }
 }

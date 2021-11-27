@@ -159,7 +159,7 @@ class ProductDetailsPage extends Component {
     }
 
     const { user } = this.context;
-    const userIsAdministrator = user && user.is_superuser;
+    const userIsAdministrator = user && user.isSuperUser;
     const userIsLogged = user && user.loggedIn;
 
     return (

@@ -18,7 +18,7 @@ const CardProduct = (props) => {
   };
 
   const { user } = context;
-  const userIsAdministrator = user && user.is_superuser;
+  const userIsAdministrator = user && user.isSuperUser;
 
   const editProduct = () => {
     history.push(`/products/product-edit/${productId}`);

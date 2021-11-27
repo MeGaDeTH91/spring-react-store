@@ -3,6 +3,8 @@ package com.example.restapi.service;
 import com.example.restapi.model.service.UserServiceModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
 
     UserServiceModel register(UserServiceModel userServiceModel);
@@ -17,13 +19,9 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel update(UserServiceModel userServiceModel);
 
-    /*UserServiceModel editUserProfile(UserServiceModel userServiceModel, UserProfileEditBindingModel userProfileEditBindingModel);
+    List<UserServiceModel> getAllUsers();
 
-    List<UserServiceModel> findAllUsers();
+    UserServiceModel changeAdminStatus(Long id);
 
-    List<UserProfileViewModel> getAllUsersWithoutRootRole(String username);
-
-    void deleteUserById(String userId);
-
-    void changeUserRole(String userId, String role);*/
+    UserServiceModel changeActivityStatus(Long id);
 }

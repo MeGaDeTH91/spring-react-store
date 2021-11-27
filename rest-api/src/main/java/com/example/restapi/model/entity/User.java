@@ -30,7 +30,6 @@ public class User extends BaseEntity implements UserDetails {
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
     private boolean enabled;
 
     public User() {
@@ -114,7 +113,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     public void setAccountNonLocked(boolean accountNonLocked) {
@@ -122,18 +121,16 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public void setEnabled(boolean enabled) {
