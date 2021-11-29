@@ -13,7 +13,7 @@ public class CategoryBindingModel {
     public CategoryBindingModel() {
     }
 
-    @Size(min = 5, max = 30, message = CategoryMessages.TITLE_VALIDATION)
+    @Size(min = 5, max = 40, message = CategoryMessages.TITLE_VALIDATION)
     @NotNull(message = CategoryMessages.TITLE_VALIDATION)
     public String getTitle() {
         return title;

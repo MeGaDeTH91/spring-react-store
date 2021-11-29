@@ -1,6 +1,7 @@
 package com.example.restapi.web.controllers;
 
 import com.example.restapi.config.JwtTokenUtil;
+import com.example.restapi.constants.Logging;
 import com.example.restapi.constants.RolesData;
 import com.example.restapi.constants.UserMessages;
 import com.example.restapi.model.response.UserResponse;
@@ -11,6 +12,8 @@ import com.example.restapi.model.service.UserServiceModel;
 import com.example.restapi.service.UserService;
 import com.example.restapi.util.JSONResponse;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String AUTHORIZATION_PREFIX = "Bearer";
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
@@ -65,6 +69,7 @@ public class AuthenticationController {
         populateUserResponseFields(userDetails, userAuthResponseModel);
         userAuthResponseModel.setToken(token);
 
+        logger.info(Logging.TRACE_AUTHENTICATE_MESSAGE + userServiceModel.getUsername());
         return ResponseEntity.ok(userAuthResponseModel);
     }
 
@@ -97,8 +102,10 @@ public class AuthenticationController {
 
             return null;
         } catch (DisabledException e) {
+            logger.warn(Logging.TRACE_AUTHENTICATE_DISABLED_ERROR);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(JSONResponse.jsonFromString(UserMessages.ACCOUNT_INACTIVE));
         } catch (BadCredentialsException e) {
+            logger.warn(Logging.TRACE_AUTHENTICATE_INVALID_CREDENTIALS_ERROR);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(JSONResponse.jsonFromString(UserMessages.INVALID_CREDENTIALS));
         }
     }

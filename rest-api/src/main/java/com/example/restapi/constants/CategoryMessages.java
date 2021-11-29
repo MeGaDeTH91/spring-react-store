@@ -8,6 +8,6 @@ public class CategoryMessages {
     public static final String UPDATE_NOT_SUCCESSFUL = "Category update was not successful.";
 
     // Binding
-    public static final String TITLE_VALIDATION = "Title should be between 5 and 30 characters long.";
+    public static final String TITLE_VALIDATION = "Title should be between 5 and 40 characters long.";
     public static final String IMAGE_URL_VALIDATION = "Enter valid URL.";
 }

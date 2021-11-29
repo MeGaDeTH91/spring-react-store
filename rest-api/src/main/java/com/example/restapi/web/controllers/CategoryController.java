@@ -43,7 +43,9 @@ public class CategoryController {
         List<CategoryServiceModel> categoriesServiceList = categoryService.getAll();
 
         if (categoriesServiceList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CategoryMessages.ERROR_GETTING_ALL_CATEGORIES);
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(JSONResponse.jsonFromString(CategoryMessages.ERROR_GETTING_ALL_CATEGORIES));
         }
 
         List<CategoryListViewModel> categories = categoriesServiceList

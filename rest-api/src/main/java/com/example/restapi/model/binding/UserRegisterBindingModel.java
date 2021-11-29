@@ -18,7 +18,7 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
-    @Size(min = 3, max = 10, message = UserMessages.USERNAME_VALIDATION)
+    @Size(min = 3, max = 25, message = UserMessages.USERNAME_VALIDATION)
     @NotNull(message = UserMessages.USERNAME_VALIDATION)
     public String getUsername() {
         return username;
@@ -28,7 +28,7 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
-    @Size(min = 3, max = 20, message = UserMessages.FIRST_NAME_VALIDATION)
+    @Size(min = 3, max = 30, message = UserMessages.FIRST_NAME_VALIDATION)
     @NotNull(message = UserMessages.FIRST_NAME_VALIDATION)
     public String getFirstName() {
         return firstName;
@@ -38,7 +38,7 @@ public class UserRegisterBindingModel {
         this.firstName = firstName;
     }
 
-    @Size(min = 3, max = 20, message = UserMessages.LAST_NAME_VALIDATION)
+    @Size(min = 3, max = 30, message = UserMessages.LAST_NAME_VALIDATION)
     @NotNull(message = UserMessages.LAST_NAME_VALIDATION)
     public String getLastName() {
         return lastName;

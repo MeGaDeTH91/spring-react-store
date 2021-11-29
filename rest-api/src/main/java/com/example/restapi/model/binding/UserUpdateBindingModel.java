@@ -15,7 +15,7 @@ public class UserUpdateBindingModel {
     public UserUpdateBindingModel() {
     }
 
-    @Size(min = 3, max = 20, message = UserMessages.FIRST_NAME_VALIDATION)
+    @Size(min = 3, max = 30, message = UserMessages.FIRST_NAME_VALIDATION)
     @NotNull(message = UserMessages.FIRST_NAME_VALIDATION)
     public String getFirstName() {
         return firstName;
@@ -25,7 +25,7 @@ public class UserUpdateBindingModel {
         this.firstName = firstName;
     }
 
-    @Size(min = 3, max = 20, message = UserMessages.LAST_NAME_VALIDATION)
+    @Size(min = 3, max = 30, message = UserMessages.LAST_NAME_VALIDATION)
     @NotNull(message = UserMessages.LAST_NAME_VALIDATION)
     public String getLastName() {
         return lastName;

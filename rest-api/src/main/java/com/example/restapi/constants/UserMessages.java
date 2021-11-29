@@ -12,7 +12,7 @@ public class UserMessages {
     public static final String EMPTY_PRINCIPAL = "Principal cannot be null!";
 
     // Binding
-    public static final String USERNAME_VALIDATION = "Username length must be between 3 and 10 characters.";
+    public static final String USERNAME_VALIDATION = "Username length must be between 3 and 25 characters.";
     public static final String FIRST_NAME_VALIDATION = "Enter valid first name.";
     public static final String LAST_NAME_VALIDATION = "Enter valid last name.";
     public static final String EMAIL_VALIDATION = "Enter valid email address.";
