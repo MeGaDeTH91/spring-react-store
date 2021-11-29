@@ -1,5 +1,7 @@
 package com.example.restapi.model.binding;
 
+import com.example.restapi.constants.UserMessages;
+
 import javax.validation.constraints.Size;
 
 public class UserLoginBindingModel {
@@ -9,7 +11,7 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
-    @Size(min = 3, max = 10, message = "Username length must be between 3 and 10 characters.")
+    @Size(min = 3, max = 25, message = UserMessages.USERNAME_VALIDATION)
     public String getUsername() {
         return username;
     }
@@ -18,7 +20,7 @@ public class UserLoginBindingModel {
         this.username = username;
     }
 
-    @Size(min = 3, message = "Password length must be more than 3 characters.")
+    @Size(min = 3, message = UserMessages.PASSWORD_VALIDATION)
     public String getPassword() {
         return password;
     }

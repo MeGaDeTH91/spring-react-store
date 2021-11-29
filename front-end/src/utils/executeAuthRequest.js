@@ -14,7 +14,7 @@ const executeAuthRequest = async (url, method, body, onSuccess, onFailure) => {
     const response = await promise.json();
 
     if (!promise.ok) {
-      onFailure(`Error occurred: ${response}`);
+      onFailure(`Error occurred: ${response.message}`);
     } else {
       onSuccess(response);
     }

@@ -2,6 +2,7 @@ package com.example.restapi.config;
 
 import com.example.restapi.web.interceptors.AdminInterceptor;
 import com.example.restapi.web.interceptors.AuthenticateInterceptor;
+import com.example.restapi.web.interceptors.RequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,8 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthenticateInterceptor())
                 .addPathPatterns("/users/*");
-        registry.addInterceptor(new AdminInterceptor())//
+        registry.addInterceptor(new AdminInterceptor())
                 .addPathPatterns("/users/all");
+        registry.addInterceptor(new RequestInterceptor());
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
