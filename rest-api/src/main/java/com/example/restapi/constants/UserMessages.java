@@ -23,5 +23,5 @@ public class UserMessages {
     public static final String USER_DOES_NOT_EXIST = "User not found.";
 
     // PUT
-    public static final String USER_MISMATCH = "Update is available only for current logged user.";
+    public static final String USER_MISMATCH = "Update is available only for currently logged user.";
 }
