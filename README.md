@@ -11,8 +11,7 @@ The application consists two parts - MySQL database provider, back-end REST API,
 based on the React library.
 
 ### <i>Launch settings: </i><br>
-The REST API is located in the 'rest-api' folder, before building and starting the project, please provide the needed configuration in application.properties, needed for MySQL database access and JWT:<br>
-, please check the provided in this project for reference.<br>
+The REST API is located in the 'rest-api' folder, before building and starting the project, please provide the needed configuration in application.properties, needed for MySQL database access and JWT, please check the provided file in the project for reference.<br>
 Then configure the Spring project:<br>
 You can do this using IntelliJ IDEA or similar software, just add run configuration and hit 'Run' button<br>or<br>
 build project with 'mvn clean install' and execute binary. This will start the REST API on
