@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void mapOrderProducts(Set<Order> dbOrders, List<OrderServiceModel> mappedOrders) {
         if (mappedOrders.stream().allMatch(order -> order.getProducts() == null)) {
-            for (Order order: dbOrders) {
+            for (Order order : dbOrders) {
                 mappedOrders
                         .stream()
                         .filter(mappedOrder -> mappedOrder.getId().equals(order.getId()))

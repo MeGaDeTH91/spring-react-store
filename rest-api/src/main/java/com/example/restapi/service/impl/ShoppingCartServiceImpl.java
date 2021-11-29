@@ -75,7 +75,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (cart == null || cart.getProducts() == null) {
             return false;
         }
-        for (Product product: cart.getProducts()) {
+        for (Product product : cart.getProducts()) {
             productService.reduceQuantity(product.getId());
         }
 

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class RequestInterceptor implements HandlerInterceptor {
-    private final Logger logger = LoggerFactory.getLogger(RequestInterceptor.class);
+public class AlterRequestInterceptor implements HandlerInterceptor {
+    private final Logger logger = LoggerFactory.getLogger(AlterRequestInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

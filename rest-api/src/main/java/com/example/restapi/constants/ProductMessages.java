@@ -5,7 +5,7 @@ public class ProductMessages {
     public static final String CREATION_NOT_SUCCESSFUL = "Product creation was not successful.";
     public static final String UPDATE_NOT_SUCCESSFUL = "Product update was not successful.";
     public static final String PRODUCT_ALREADY_EXISTS = "Product already exists.";
-    public static final String PRODUCT_DOES_NOT_EXISTS = "Product does not exists.";
+    public static final String PRODUCT_DOES_NOT_EXISTS = "Product does not exist.";
     public static final String PRODUCT_DELETED_SUCCESSFULLY = "Successfully removed product!";
 
     // Binding
